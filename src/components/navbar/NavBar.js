@@ -10,7 +10,6 @@ class NavBar extends Component {
         this.props.history.push("/");
     };
 
-
     render() {
 
         return (
@@ -30,16 +29,16 @@ class NavBar extends Component {
                             </li>
                             */}
                             <li>
-                                <span className="nav-link " onClick={this.handleSignOut}>SignOut</span>
+                                <span className="nav-link " onClick={this.handleSignOut}>Sign Out</span>
                             </li>
                         </>
                     ) : (
                             <>
                                 <li>
-                                    <Link className="nav-link" to="/signup">SignUp</Link>
+                                    <Link className="nav-link" to="/signin">Sign In</Link>
                                 </li>
                                 <li>
-                                    <Link className="nav-link" to="/signin">SignIn</Link>
+                                    <Link className="nav-link" to="/signup">Sign Up</Link>
                                 </li>
                             </>
                         )

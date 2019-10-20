@@ -15,6 +15,15 @@ export default class AppViews extends Component {
     return (
       <React.Fragment>
 
+        <Route exact path="/upload" render={props => {
+          if (this.props.user) {
+            return <GeneralList Elements={"photos"} {...props} />
+          } else {
+            return <Redirect to="/signin" />;
+          }
+        }}
+        />
+
         <Route path="/signup" render={props => {
           if (!this.props.user) {
             return <SignUp newUser={this.props.newUser} {...props} />
@@ -33,18 +42,9 @@ export default class AppViews extends Component {
 
         <Route exact path="/" render={props => {
           if (this.props.user) {
-            return <GeneralList Elements={"upload"} {...props} />
+            return <GeneralList Elements={"photos"} {...props} />
           }
         }} />
-
-        <Route exact path="/upload" render={props => {
-          if (this.props.user) {
-            return <GeneralList Elements={"upload"} {...props} />
-          } else {
-            return <Redirect to="/signin" />;
-          }
-        }}
-        />
 
       </React.Fragment>
     );

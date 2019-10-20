@@ -1,7 +1,8 @@
 import React, { Component } from "react"
 import { Link } from "react-router-dom"
-
 import { Button, Form, FormGroup, Label, Input, Card, CardBody, Row, Col } from 'reactstrap'
+
+
 class SignIn extends Component {
 
 	// Set initial state
@@ -19,23 +20,24 @@ class SignIn extends Component {
 
 	handleSignIn = (e) => {
 		e.preventDefault()
-		/*
-			For now, just store the email and password that
-			the customer enters into local storage.
-		*/
+		// For now, just store the email and password that the customer enters into local storage.
 		let credentials = { email: this.state.email, password: this.state.password }
+		console.log("SignIn handleSignIn credentials:", credentials)
 		this.props.setUser(credentials);
 		this.props.history.push("/");
 	}
 
 	render() {
+
+		console.log("Sign In")
+
 		return (
 			<div className="spooky-background">
 				<Row className="my-5">
 					<Col md={{ size: 4, offset: 4 }}>
 						<Card>
 							<CardBody>
-								<Form onSubmit={this.handleLogin}>
+								<Form onSubmit={this.handleSignIn}>
 									<FormGroup>
 										<h3>Please sign in</h3>
 									</FormGroup>
@@ -70,7 +72,6 @@ class SignIn extends Component {
 			</div>
 		)
 	}
-
 }
 
 export default SignIn
