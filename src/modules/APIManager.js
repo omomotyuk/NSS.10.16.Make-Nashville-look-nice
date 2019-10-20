@@ -2,9 +2,7 @@ const remoteURL = "http://localhost:8088"
 
 /* filtering info here +> https://jsonapi.org/recommendations/ */
 /*
-      Since the purpose of this module is to be used by
-      all of the more specialized ones, then the string
-      of `animals` should not be hard coded here.
+      Since the purpose of this module is to be used by all of the more specialized ones, then the string of `animals` should not be hard coded here.
 */
 
 
@@ -42,7 +40,6 @@ const API = {
     } else {
       query = ""
     }
-
     //console.log("API.getRecord.query: ", query)
 
     return fetch(`${remoteURL}/${query}`)
