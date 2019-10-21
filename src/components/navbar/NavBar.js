@@ -25,6 +25,9 @@ class NavBar extends Component {
                             </li>
                             {/*
                             <li className="nav-item">
+                                <Link className="nav-link" to="/openLayers">OpenLayers</Link>
+                            </li>
+                            <li className="nav-item">
                                 <Link className="nav-link" to="/close">Close</Link>
                             </li>
                             */}
