@@ -3,6 +3,7 @@ import React, { Component } from "react";
 import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
 import GeneralList from "./general/GeneralList";
+import OpenLayersMap from "../maps/OpenLayers/OpenLayersMap"
 
 
 export default class AppViews extends Component {
@@ -23,7 +24,16 @@ export default class AppViews extends Component {
           }
         }}
         />
-
+        {/*}
+        <Route exact path="/openLayers" render={props => {
+          if (this.props.user) {
+            return <OpenLayersMap {...props} />
+          } else {
+            return <Redirect to="/signin" />;
+          }
+        }}
+        />
+*/}
         <Route path="/signup" render={props => {
           if (!this.props.user) {
             return <SignUp newUser={this.props.newUser} {...props} />
