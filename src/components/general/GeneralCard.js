@@ -13,9 +13,10 @@ class GeneralCard extends Component {
     render() {
         return (
             <Card body>
-                <CardTitle>{this.props.element.fileName}</CardTitle>
-                <CardText>{this.props.element.fileName} is good</CardText>
-                <Button color="primary" >Details</Button>
+                {/*<CardTitle>{this.props.element.fileName}</CardTitle>*/}
+                {/*<CardText>{this.props.element.fileName} is good</CardText>*/}
+                <img className="test-photo" src={require("../../images/test-photo.jpg")} alt="test photo" />
+                {/* <Button color="primary" >Details</Button> */}
                 <Button color="danger" onClick={() => this.handleDelete(this.props.element.id)}>Delete</Button>
             </Card>
         )

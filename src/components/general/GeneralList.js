@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import GeneralCard from './GeneralCard';
 import APIManager from '../../modules/APIManager';
+import "./General.css"
 
 class GeneralList extends Component {
     state = {
@@ -26,18 +27,28 @@ class GeneralList extends Component {
         console.log("pls render Elements")
         return (
             <>
-                <h1>{this.props.Elements} List</h1>
-                {
-                    this.state.allElements.map(element =>
-                        <GeneralCard
-                            key={element.id}
-                            Elements={this.props.Elements}
-                            element={element}
-                            {...this.props}
-                            getData={this.getData}
-                        />
-                    )
-                }
+                <div className="map-flex-container">
+                    <aside>
+                        <article>
+                            {/*<h1>{this.props.Elements} List</h1>*/}
+                            {
+                                this.state.allElements.map(element =>
+                                    <GeneralCard
+                                        key={element.id}
+                                        Elements={this.props.Elements}
+                                        element={element}
+                                        {...this.props}
+                                        getData={this.getData}
+                                    />
+                                )
+                            }
+                        </article>
+                    </aside>
+                    <main>
+                        <img className="test-map" src={require("../../images/test-map.png")} alt="test map image" />
+                    </main>
+
+                </div>
             </>
         )
     }
