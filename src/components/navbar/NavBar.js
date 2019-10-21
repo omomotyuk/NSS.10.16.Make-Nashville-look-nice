@@ -21,14 +21,20 @@ class NavBar extends Component {
                                 <Link className="nav-link" to="/"></Link>
                             </li>
                             <li className="nav-item">
+                                <Link className="nav-link" to="/general">News</Link>
+                            </li>
+                            <li className="nav-item">
                                 <Link className="nav-link" to="/upload">Upload</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/close">Close</Link>
+                            </li>
+                            <li className="nav-item">
+                                <Link className="nav-link" to="/complain">Complain</Link>
                             </li>
                             {/*
                             <li className="nav-item">
                                 <Link className="nav-link" to="/openLayers">OpenLayers</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/close">Close</Link>
                             </li>
                             */}
                             <li>
