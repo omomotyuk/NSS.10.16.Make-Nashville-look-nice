@@ -18,6 +18,7 @@ class SignIn extends Component {
 		this.setState(stateToChange)
 	}
 
+	//
 	handleSignIn = (e) => {
 		e.preventDefault()
 		// For now, just store the email and password that the customer enters into local storage.
@@ -28,9 +29,6 @@ class SignIn extends Component {
 	}
 
 	render() {
-
-		//console.log("Sign In")
-
 		return (
 			<div className="spooky-background">
 				<Row className="my-5">

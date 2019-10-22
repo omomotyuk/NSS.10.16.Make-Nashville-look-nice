@@ -52,7 +52,7 @@ class App extends Component {
 
 
   setUser = authObj => {
-    console.log("setUser obj:", authObj)
+    console.log("App.setUser: userInfo from SignIn:", authObj)
     this.setState(updater => ({
       query: {
         table: updater.query.table,

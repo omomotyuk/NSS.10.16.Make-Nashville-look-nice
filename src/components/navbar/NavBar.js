@@ -10,33 +10,60 @@ class NavBar extends Component {
         this.props.history.push("/");
     };
 
-    render() {
 
+    userAccess = (level) => {
+        if (level <= parseInt(this.props.level)) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+
+    newLink = (path, title) => {
+        const link = {
+            path: path,
+            title: title,
+        }
+        return link
+    }
+
+
+    newLinkList = () => {
+        const linkList = []
+
+        linkList[0] = this.newLink("", "")
+        linkList[1] = this.newLink("general", "News")
+        linkList[2] = this.newLink("upload", "Upload")
+        linkList[3] = this.newLink("close", "Close")
+        linkList[4] = this.newLink("complain", "Complain")
+
+        return linkList
+    }
+
+
+    addLink = (key, path, title) => {
+        return (
+            <li className="nav-item" key={key}>
+                <Link className="nav-link" to={path}>{title}</Link>
+            </li>
+        )
+    }
+
+
+    render() {
         return (
             <nav className="navbar navbar-light light-blue flex-md-nowrap p-0 shadow">
                 <ul className="nav nav-pills nav-fill">
                     {this.props.user ? (
                         <>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/"></Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/general">News</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/upload">Upload</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/close">Close</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/complain">Complain</Link>
-                            </li>
-                            {/*
-                            <li className="nav-item">
-                                <Link className="nav-link" to="/openLayers">OpenLayers</Link>
-                            </li>
-                            */}
+                            {
+                                this.newLinkList().map((link, index) => {
+                                    //console.log("NavBar.render: map.index:", index)
+                                    if (index <= this.props.level + 1) { return this.addLink(index, link.path, link.title) }
+                                    else { return null }
+                                })
+                            }
                             <li>
                                 <span className="nav-link " onClick={this.handleSignOut}>Sign Out</span>
                             </li>
