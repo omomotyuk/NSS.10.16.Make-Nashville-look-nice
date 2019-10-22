@@ -4,7 +4,7 @@ import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
 import GeneralList from "./general/GeneralList";
 import Upload from "./upload/Upload"
-import OpenLayersMap from "../maps/OpenLayers/OpenLayersMap"
+//import OpenLayersMap from "../maps/OpenLayers/OpenLayersMap"
 
 
 export default class AppViews extends Component {
@@ -13,12 +13,33 @@ export default class AppViews extends Component {
     routePaths: ["upload", "close"]
   }
 
+  userAccess = (level) => {
+
+    console.log("userAccess props.level:", this.props.level)
+
+    if (level <= parseInt(this.props.level)) {
+      return true
+    } else {
+      return false
+    }
+  }
+
+
+  componentDidMount() {
+    //console.log("AppView - ComponentDidMount props.user:", this.props.user);
+    //console.log("AppView - ComponentDidMount props.level:", this.props.level);
+    //this.getData(this.props.Elements)
+  }
+
+
+
+
   render() {
     return (
       <React.Fragment>
 
         <Route exact path="/" render={props => {
-          if (this.props.user) {
+          if (this.props.user && this.userAccess(0)) {
             return <GeneralList Elements={"photos"} {...props} />
           } else {
             return <Redirect to="/signin" />;
@@ -26,7 +47,7 @@ export default class AppViews extends Component {
         }} />
 
         <Route exact path="/general" render={props => {
-          if (this.props.user) {
+          if (this.props.user && this.userAccess(0)) {
             return <GeneralList Elements={"photos"} {...props} />
           } else {
             return <Redirect to="/signin" />;
@@ -34,7 +55,7 @@ export default class AppViews extends Component {
         }} />
 
         <Route exact path="/upload" render={props => {
-          if (this.props.user) {
+          if (this.props.user && this.userAccess(1)) {
             return <Upload {...props} />
           } else {
             return <Redirect to="/signin" />;
@@ -43,7 +64,7 @@ export default class AppViews extends Component {
         />
 
         <Route exact path="/close" render={props => {
-          if (this.props.user) {
+          if (this.props.user && this.userAccess(2)) {
             return <GeneralList Elements={"photos"} {...props} />
           } else {
             return <Redirect to="/signin" />;
@@ -51,7 +72,7 @@ export default class AppViews extends Component {
         }} />
 
         <Route exact path="/complain" render={props => {
-          if (this.props.user) {
+          if (this.props.user && this.userAccess(3)) {
             return <GeneralList Elements={"photos"} {...props} />
           } else {
             return <Redirect to="/signin" />;

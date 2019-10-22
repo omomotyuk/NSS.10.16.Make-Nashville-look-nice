@@ -22,14 +22,14 @@ class SignIn extends Component {
 		e.preventDefault()
 		// For now, just store the email and password that the customer enters into local storage.
 		let credentials = { email: this.state.email, password: this.state.password }
-		console.log("SignIn handleSignIn credentials:", credentials)
+		//console.log("SignIn handleSignIn credentials:", credentials)
 		this.props.setUser(credentials);
 		this.props.history.push("/");
 	}
 
 	render() {
 
-		console.log("Sign In")
+		//console.log("Sign In")
 
 		return (
 			<div className="spooky-background">

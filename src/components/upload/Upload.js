@@ -1,6 +1,7 @@
 import React, { Component } from "react"
-import { Link } from "react-router-dom"
-import { Button, Form, FormGroup, Label, Input, Card, CardBody, Row, Col } from 'reactstrap'
+//import { Link } from "react-router-dom"
+import { Button, Form, FormGroup, Input, Card, CardBody, Row, Col } from 'reactstrap'
+//import { Label } from 'reactstrap'
 
 
 class Upload extends Component {

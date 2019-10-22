@@ -19,12 +19,12 @@ class GeneralList extends Component {
     }
 
     componentDidMount() {
-        console.log("General list: ComponentDidMount", this.props.Elements);
+        //console.log("General list: ComponentDidMount", this.props.Elements);
         this.getData(this.props.Elements)
     }
 
     render() {
-        console.log("pls render Elements")
+        //console.log("pls render Elements")
         return (
             <>
                 <div className="map-flex-container">
@@ -45,7 +45,7 @@ class GeneralList extends Component {
                         </article>
                     </aside>
                     <main>
-                        <img className="test-map" src={require("../../images/test-map.png")} alt="test map image" />
+                        <img className="test-map" src={require("../../images/test-map.png")} alt="test map" />
                     </main>
 
                 </div>
