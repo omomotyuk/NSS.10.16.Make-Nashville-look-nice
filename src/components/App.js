@@ -11,6 +11,8 @@ class App extends Component {
   state = {
     user: localStorage.getItem("credentials") !== null,
 
+    level: 0,
+
     query: {
       table: "users",
       email: "",
@@ -25,11 +27,18 @@ class App extends Component {
 
     APIManager.getRecord(this.state.query)
       .then(userList => {
-        console.log("checkLoginData userList:", userList)
+        //console.log("checkLoginData userList:", userList)
         if (userList.length) {
           localStorage.setItem("credentials", JSON.stringify(userList));
+          //
+          let returnedStorage = localStorage.getItem('credentials')
+          let currentUser = JSON.parse(returnedStorage)[0]
+          //
+          //console.log("checkLoginData credentials currentUser:", currentUser)
+          //console.log("checkLoginData credentials currentUser.level:", currentUser.level)
           this.setState({
-            user: this.isAuthenticated()
+            user: this.isAuthenticated(),
+            level: currentUser.level
           });
         } else {
           alert("Input data is not valid. Try again!");
@@ -178,8 +187,8 @@ class App extends Component {
   render() {
     return (
       <React.Fragment>
-        <NavBar user={this.state.user} clearUser={this.clearUser} />
-        <AppViews user={this.state.user} setUser={this.setUser} newUser={this.newUser} />
+        <NavBar user={this.state.user} level={this.state.level} clearUser={this.clearUser} />
+        <AppViews user={this.state.user} level={this.state.level} setUser={this.setUser} newUser={this.newUser} />
       </React.Fragment>
     );
   }

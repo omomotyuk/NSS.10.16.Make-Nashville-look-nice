@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, CardFooter, CardText, CardTitle, Button } from 'reactstrap';
+import { Card, CardBody, CardHeader, CardFooter, CardTitle, Button } from 'reactstrap';
+//import {  CardText } from 'reactstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import APIManager from '../../modules/APIManager'
 
@@ -22,7 +23,7 @@ class GeneralCard extends Component {
                     <CardTitle> {/*{this.props.element.fileName}*/}</CardTitle>
                     <CardHeader size="sm">Photo # <Button close /></CardHeader>
                     {/*<CardText>{this.props.element.fileName} is good</CardText>*/}
-                    <img className="test-photo" src={require("../../images/test-photo.jpg")} alt="test photo" />
+                    <img className="test-photo" src={require("../../images/test-photo.jpg")} alt="test" />
                     {/* <Button color="primary" >Details</Button> */}
                 </CardBody>
                 <CardFooter>

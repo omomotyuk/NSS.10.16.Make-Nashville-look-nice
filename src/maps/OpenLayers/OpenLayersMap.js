@@ -4,7 +4,7 @@ import { Button, Form, FormGroup, Label, Input, Card, CardBody, Row, Col } from 
 //import APIManager from '../../modules/APIManager';
 
 //import GoogleMap from '../GoogleMap/GoogleMap';
-import loadOpenLayersMap from '../../modules/loadOpenLayersMap.js';
+//import loadOpenLayersMap from '../../modules/loadOpenLayersMap.js';
 
 
 
@@ -12,33 +12,33 @@ class OpenLayersMap extends Component {
     state = {
         openLayersMapsReady: false
     }
+    /*
+        componentWillMount() {
+            loadOpenLayersMap((OpenLayers) => {
+                // Work to do after the library loads.
+                this.setState({ openLayersMapReady: true });
 
-    componentWillMount() {
-        loadOpenLayersMap((OpenLayers) => {
-            // Work to do after the library loads.
-            this.setState({ openLayersMapReady: true });
+                var lat = 47.35387;
+                var lon = 8.43609;
+                var zoom = 18;
 
-            var lat = 47.35387;
-            var lon = 8.43609;
-            var zoom = 18;
+                var fromProjection = new OpenLayers.Projection("EPSG:4326");
+                var toProjection = new OpenLayers.Projection("EPSG:900913");
+                var position = new OpenLayers.LonLat(lon, lat).transform(fromProjection, toProjection);
 
-            var fromProjection = new OpenLayers.Projection("EPSG:4326");
-            var toProjection = new OpenLayers.Projection("EPSG:900913");
-            var position = new OpenLayers.LonLat(lon, lat).transform(fromProjection, toProjection);
+                var map = new OpenLayers.Map("Map");
+                var mapnik = new OpenLayers.Layer.OSM();
+                map.addLayer(mapnik);
 
-            var map = new OpenLayers.Map("Map");
-            var mapnik = new OpenLayers.Layer.OSM();
-            map.addLayer(mapnik);
+                var markers = new OpenLayers.Layer.Markers("Markers");
+                map.addLayer(markers);
+                markers.addMarker(new OpenLayers.Marker(position));
 
-            var markers = new OpenLayers.Layer.Markers("Markers");
-            map.addLayer(markers);
-            markers.addMarker(new OpenLayers.Marker(position));
+                map.setCenter(position, zoom);
 
-            map.setCenter(position, zoom);
-
-        })
-    }
-
+            })
+        }
+    */
     /*
       getData = (Elements) => {
           APIManager.getAll(Elements).then((allElements) => {
