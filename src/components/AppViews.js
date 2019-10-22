@@ -13,10 +13,9 @@ export default class AppViews extends Component {
     routePaths: ["upload", "close"]
   }
 
+
   userAccess = (level) => {
-
     console.log("userAccess props.level:", this.props.level)
-
     if (level <= parseInt(this.props.level)) {
       return true
     } else {
@@ -30,8 +29,6 @@ export default class AppViews extends Component {
     //console.log("AppView - ComponentDidMount props.level:", this.props.level);
     //this.getData(this.props.Elements)
   }
-
-
 
 
   render() {
@@ -104,7 +101,6 @@ export default class AppViews extends Component {
             return <Redirect to="/signin" />;
           }
         }} />
-
 
       </React.Fragment>
     );
