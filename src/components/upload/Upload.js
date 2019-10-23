@@ -2,14 +2,18 @@ import React, { Component } from "react"
 //import { Link } from "react-router-dom"
 import { Button, Form, FormGroup, Input, Card, CardBody, Row, Col } from 'reactstrap'
 //import { Label } from 'reactstrap'
+//import ImageUploader from 'react-images-upload';
+
+//
+var EXIF = require("../../../node_modules/exif-js/exif.js");
 
 
 class Upload extends Component {
 
     // Set initial state
     state = {
-        email: "",
-        password: ""
+        pictures: [],
+        selectedFile: null
     }
 
     // Update state whenever an input field is edited
@@ -19,14 +23,29 @@ class Upload extends Component {
         this.setState(stateToChange)
     }
 
-    handleSignIn = (e) => {
+    //
+    handleUpload = (e) => {
         e.preventDefault()
-        // For now, just store the email and password that the customer enters into local storage.
-        let credentials = { email: this.state.email, password: this.state.password }
-        console.log("Upload handleSignIn credentials:", credentials)
-        //this.props.setUser(credentials);
+        //
         this.props.history.push("/");
     }
+
+    //
+    fileChangedHandler = event => {
+        this.setState({ selectedFile: event.target.files[0] })
+
+        EXIF.getData(event.target.files[0], function () {
+            var allMetaData = EXIF.getAllTags(this);
+            console.log("metaData:", allMetaData)
+        });
+    }
+
+    //
+    uploadHandler = (e) => {
+        e.preventDefault()
+        //console.log("uploadHandler: selectedFile", this.state.selectedFile)
+    }
+
 
     render() {
         return (
@@ -35,7 +54,7 @@ class Upload extends Component {
                     <Col md={{ size: 4, offset: 4 }}>
                         <Card>
                             <CardBody>
-                                <Form onSubmit={this.handleSignIn}>
+                                <Form onSubmit={this.uploadHandler}>
                                     <FormGroup>
                                         <h3>Upload issue photo</h3>
                                     </FormGroup>
@@ -49,7 +68,9 @@ class Upload extends Component {
                                             accept=".jpg,.jpeg,.tiff"
                                             title="Click here to upload document"
                                             className="_74090ebd-upload-uploadContainer"
-                                            type="file" />
+                                            id="uploadedPhoto"
+                                            type="file"
+                                            onChange={this.fileChangedHandler} />
                                     </FormGroup>
                                     <FormGroup>
                                         <Button type="submit">Upload</Button>
