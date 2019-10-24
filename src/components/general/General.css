@@ -25,6 +25,11 @@ aside {
     overflow: scroll;
 }
 
+#map {
+    height: 800px;
+    background:lightgrey;
+  }
+
 img.test-map {
 /*    width: 1000px;*/
     height: 800px;
@@ -36,7 +41,7 @@ img.test-photo {
     margin-right: auto;
     max-width: 75%;
     height: auto;
-        border-radius: 8px;
+    border-radius: 8px;
 
     /* height: 80px; */
 }

@@ -4,6 +4,8 @@ import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
 import GeneralList from "./general/GeneralList";
 import Upload from "./upload/Upload"
+import GeneralListMap from "./general/GeneralListMap";
+//import Leaflet from "../maps/Leaflet/Leaflet"
 //import OpenLayersMap from "../maps/OpenLayers/OpenLayersMap"
 
 
@@ -62,7 +64,7 @@ export default class AppViews extends Component {
 
         <Route exact path="/close" render={props => {
           if (this.props.user && this.userAccess(2)) {
-            return <GeneralList Elements={"photos"} {...props} />
+            return <GeneralListMap Elements={"photos"} {...props} />
           } else {
             return <Redirect to="/signin" />;
           }
