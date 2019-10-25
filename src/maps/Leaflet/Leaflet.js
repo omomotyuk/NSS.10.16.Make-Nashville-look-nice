@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import L from 'leaflet';
 import Token from '../../Token.js'
 //import { LeafletModule } from '@asymmetrik/ngx-leaflet'
-// marker loading problem
+// marker loading problem: https://github.com/Leaflet/Leaflet/issues/4968
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 
@@ -53,6 +53,8 @@ export default class Leaflet extends Component {
 
     // random location mark
     L.marker([35.89336119702232, -86.33231166335291]).addTo(this.map)
+    //L.marker([35.94210041666666, -83.9531983888889]).addTo(this.map) // Knoxville mark
+    //L.marker(["35°50′46″N", "86°23′31″W"]).addTo(this.map)
 
     // log user clicks
     this.map.on('click', event => {
