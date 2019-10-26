@@ -3,10 +3,8 @@ import React, { Component } from "react"
 import { Button, Form, FormGroup, Input, Card, CardBody, Row, Col } from 'reactstrap'
 //import { Label } from 'reactstrap'
 //import ImageUploader from 'react-images-upload';
+import ExifData from "./ExifData"
 import GPStoDegree from "./GPStoDegree"
-
-//
-var EXIF = require("../../../node_modules/exif-js/exif.js");
 
 
 class Upload extends Component {
@@ -14,7 +12,9 @@ class Upload extends Component {
     // Set initial state
     state = {
         pictures: [],
-        selectedFile: null
+        selectedFile: null,
+        fileName: "",
+        photoData: null
     }
 
     // Update state whenever an input field is edited
@@ -33,28 +33,40 @@ class Upload extends Component {
 
     //
     fileChangedHandler = event => {
-        this.setState({ selectedFile: event.target.files[0] })
+        //console.log("upload file name:", event.target.files[0].name)
 
-        EXIF.getData(event.target.files[0], function () {
-            var allMetaData = EXIF.getAllTags(this);
-            console.log("metaData:", allMetaData)
-            /*
-                        console.log("DateTime:", allMetaData.DateTime)
-                        console.log("GPSLatitude:", allMetaData.GPSLatitude)
-                        console.log("GPSLatitudeRef:", allMetaData.GPSLatitudeRef)
-                        console.log("GPSLongitude:", allMetaData.GPSLongitude)
-                        console.log("GPSLongitudeRef:", allMetaData.GPSLongitudeRef)
-            */
-            var Convertor = new GPStoDegree(allMetaData)
+        this.setState({
+            selectedFile: event.target.files[0],
+            fileName: event.target.files[0].name,
+            photoData: ExifData.getExifData(event.target.files[0])
+        })
+    }
 
-            console.log("GPS degree data:", Convertor.getData())
-        });
+    //
+    convertDateTime = (dateTime) => {
+        let t = dateTime.replace(" ", ":").split(":")
+        return new Date(t[0], t[1], t[2], t[3], t[4], t[5])
     }
 
     //
     uploadHandler = (e) => {
         e.preventDefault()
-        //console.log("uploadHandler: selectedFile", this.state.selectedFile)
+
+        var Convertor = new GPStoDegree(this.state.photoData)
+
+        let location = Convertor.getData()
+
+        let photo = {
+            fileName: this.state.fileName,
+            takenDate: JSON.stringify(this.convertDateTime(this.state.photoData.DateTime)),
+            uploadDate: JSON.stringify(new Date()),
+            latitude: location.latitude,
+            longitude: location.longitude,
+            comment: "",
+            userId: JSON.parse(localStorage.getItem("credentials"))[0].id
+        }
+
+        console.log("new photo:", photo)
     }
 
 
