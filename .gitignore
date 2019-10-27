@@ -26,3 +26,4 @@ yarn-error.log*
 /api
 /tmp
 /src/Token.js
+/src/photos

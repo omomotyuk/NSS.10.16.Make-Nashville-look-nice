@@ -3,6 +3,7 @@ import React, { Component } from "react"
 import { Button, Form, FormGroup, Input, Card, CardBody, Row, Col } from 'reactstrap'
 //import { Label } from 'reactstrap'
 //import ImageUploader from 'react-images-upload';
+import APIManager from "../../modules/APIManager"
 import ExifData from "./ExifData"
 import GPStoDegree from "./GPStoDegree"
 
@@ -58,15 +59,46 @@ class Upload extends Component {
 
         let photo = {
             fileName: this.state.fileName,
-            takenDate: JSON.stringify(this.convertDateTime(this.state.photoData.DateTime)),
-            uploadDate: JSON.stringify(new Date()),
+            takenDate: this.convertDateTime(this.state.photoData.DateTime),
+            uploadDate: new Date(),
             latitude: location.latitude,
             longitude: location.longitude,
             comment: "",
             userId: JSON.parse(localStorage.getItem("credentials"))[0].id
         }
 
-        console.log("new photo:", photo)
+        let issue = {
+            reportPhoto: 1,
+            closePhoto: 0,
+            comment: "",
+            status: "active",
+            userId: JSON.parse(localStorage.getItem("credentials"))[0].id
+        }
+
+        APIManager.getAndFilter("photos", "fileName", photo.fileName)
+            .then(photoList => {
+                if (photoList.length) {
+                    alert("Photos " + photo.fileName + " is already in database!");
+                } else {
+                    // putting new record to database
+                    //if (this.verifyInput(query)) {
+                    //const record = this.newRecord(query);
+                    APIManager.putRecord("photos", photo).then(data => {
+                        console.log("new photo record data:", data)
+                        issue.reportPhoto = data.id
+                        alert("New photo " + photo.fileName + " added. Thanks for report!");
+                    })
+                        .then(() => {
+                            APIManager.putRecord("issues", issue).then(data => {
+                                console.log("new issue record data:", data)
+                                alert("New issue created. Thanks for report!");
+                            })
+                        })
+                    //} else {
+                    //alert("Input data for registration is not valid. Try again!");
+                    //}
+                }
+            })
     }
 
 
