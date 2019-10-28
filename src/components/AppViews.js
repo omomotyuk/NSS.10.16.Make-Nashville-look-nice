@@ -17,7 +17,7 @@ export default class AppViews extends Component {
 
 
   userAccess = (level) => {
-    console.log("userAccess props.level:", this.props.level)
+    //console.log("userAccess props.level:", this.props.level)
     if (level <= parseInt(this.props.level)) {
       return true
     } else {

@@ -45,3 +45,7 @@ img.test-photo {
 
     /* height: 80px; */
 }
+
+span.generalCardPhotoUser {
+    color: blue;
+}
