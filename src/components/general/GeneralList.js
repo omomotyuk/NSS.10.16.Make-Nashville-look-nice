@@ -3,16 +3,18 @@ import GeneralCard from './GeneralCard';
 import APIManager from '../../modules/APIManager';
 import "./General.css"
 
+
 class GeneralList extends Component {
     state = {
-        allElements: []
+        issues: []
     }
 
     getData = (Elements) => {
-        APIManager.getAll(Elements).then((allElements) => {
+        APIManager.getAndFilter(Elements, "status", "active").then((issues) => {
+            console.log("GeneralList.getData: issues:", issues)
             this.setState(() => {
                 return {
-                    allElements: allElements
+                    issues: issues
                 }
             })
         })
@@ -32,11 +34,11 @@ class GeneralList extends Component {
                         <article>
                             {/*<h1>{this.props.Elements} List</h1>*/}
                             {
-                                this.state.allElements.map(element =>
+                                this.state.issues.map(element =>
                                     <GeneralCard
                                         key={element.id}
-                                        Elements={this.props.Elements}
                                         element={element}
+                                        Elements={this.props.Elements}
                                         {...this.props}
                                         getData={this.getData}
                                     />

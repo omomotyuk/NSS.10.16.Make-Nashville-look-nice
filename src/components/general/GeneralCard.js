@@ -3,8 +3,16 @@ import { Card, CardBody, CardHeader, CardFooter, CardTitle, Button } from 'react
 //import {  CardText } from 'reactstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import APIManager from '../../modules/APIManager'
+//import GImage from "./GImage"
 
 class GeneralCard extends Component {
+
+    state = {
+        path: "../../photos/",
+        photo: {
+            fileName: "test-photo.jpg"
+        }
+    }
 
     handleEdit = () => {
 
@@ -15,6 +23,24 @@ class GeneralCard extends Component {
             .then(() => this.props.getData(this.props.Elements))
     }
 
+    getPhoto = (issue) => {
+        APIManager.get("photos", issue.reportPhoto).then((photo) => {
+            console.log("GeneralCard.getPhoto - photo:", photo)
+            this.setState(() => {
+                return {
+                    //photo: (this.state.path + photo.fileName)
+                    photo: photo
+                }
+            })
+        })
+    }
+
+    componentDidMount() {
+        //console.log("GeneralCard didMount - element:", this.props.element)
+        this.getPhoto(this.props.element)
+    }
+
+
     render() {
         return (
             <Card>
@@ -23,7 +49,7 @@ class GeneralCard extends Component {
                     <CardTitle> {/*{this.props.element.fileName}*/}</CardTitle>
                     <CardHeader size="sm">Photo # <Button close /></CardHeader>
                     {/*<CardText>{this.props.element.fileName} is good</CardText>*/}
-                    <img className="test-photo" src={require("../../images/test-photo.jpg")} alt="test" />
+                    <img className="test-photo" src={require("../../photos/" + this.state.photo.fileName)} alt="test" />
                     {/* <Button color="primary" >Details</Button> */}
                 </CardBody>
                 <CardFooter>
