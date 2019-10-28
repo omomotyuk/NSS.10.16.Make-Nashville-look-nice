@@ -11,7 +11,7 @@ class GeneralList extends Component {
 
     getData = (Elements) => {
         APIManager.getAndFilter(Elements, "status", "active").then((issues) => {
-            console.log("GeneralList.getData: issues:", issues)
+            //console.log("GeneralList.getData - issues:", issues)
             this.setState(() => {
                 return {
                     issues: issues
@@ -19,7 +19,9 @@ class GeneralList extends Component {
             })
         })
     }
+    //
 
+    //
     componentDidMount() {
         //console.log("General list: ComponentDidMount", this.props.Elements);
         this.getData(this.props.Elements)
