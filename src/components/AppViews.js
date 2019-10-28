@@ -39,7 +39,7 @@ export default class AppViews extends Component {
 
         <Route exact path="/" render={props => {
           if (this.props.user && this.userAccess(0)) {
-            return <GeneralList Elements={"photos"} {...props} />
+            return <GeneralList Elements={"issues"} {...props} />
           } else {
             return <Redirect to="/signin" />;
           }
@@ -47,7 +47,7 @@ export default class AppViews extends Component {
 
         <Route exact path="/general" render={props => {
           if (this.props.user && this.userAccess(0)) {
-            return <GeneralList Elements={"photos"} {...props} />
+            return <GeneralList Elements={"issues"} {...props} />
           } else {
             return <Redirect to="/signin" />;
           }
@@ -64,7 +64,7 @@ export default class AppViews extends Component {
 
         <Route exact path="/close" render={props => {
           if (this.props.user && this.userAccess(2)) {
-            return <GeneralListMap Elements={"photos"} {...props} />
+            return <GeneralListMap Elements={"issues"} {...props} />
           } else {
             return <Redirect to="/signin" />;
           }
@@ -72,7 +72,7 @@ export default class AppViews extends Component {
 
         <Route exact path="/complain" render={props => {
           if (this.props.user && this.userAccess(3)) {
-            return <GeneralList Elements={"photos"} {...props} />
+            return <GeneralList Elements={"issues"} {...props} />
           } else {
             return <Redirect to="/signin" />;
           }

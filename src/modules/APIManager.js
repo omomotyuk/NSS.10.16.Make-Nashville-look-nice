@@ -7,8 +7,8 @@ const remoteURL = "http://localhost:8088"
 
 
 const API = {
-  get: (id, database) => {
-    return fetch(`${remoteURL}/${database}/${id}`).then(e => e.json())
+  get: (table, id) => {
+    return fetch(`${remoteURL}/${table}/${id}`).then(e => e.json())
   },
   getAndExpand: (id, database, expanded) => {
     return fetch(`${remoteURL}/${database}/${id}?_expand=${expanded}`).then(e => e.json())
