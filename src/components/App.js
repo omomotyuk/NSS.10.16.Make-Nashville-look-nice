@@ -4,6 +4,7 @@ import NavBar from "./navbar/NavBar";
 import AppViews from "./AppViews";
 import "./App.css";
 import APIManager from "../modules/APIManager"
+import LocationData from "./LocationData"
 
 
 class App extends Component {
@@ -19,7 +20,9 @@ class App extends Component {
       password: "",
       name: "",
       username: ""
-    }
+    },
+
+    locations: []
   };
 
 
@@ -33,7 +36,6 @@ class App extends Component {
           //
           let returnedStorage = localStorage.getItem('credentials')
           let currentUser = JSON.parse(returnedStorage)[0]
-          //
           //console.log("checkLoginData credentials currentUser:", currentUser)
           //console.log("checkLoginData credentials currentUser.level:", currentUser.level)
           this.setState({
@@ -64,7 +66,6 @@ class App extends Component {
     }), () => { this.checkLoginData() }
     )
   }
-
 
   containsCharacterFrom = (set, phrase) => {
     if (
@@ -182,13 +183,24 @@ class App extends Component {
     });
   };
 
+  //
+  getLocation = (locations) => {
+    //
+
+    this.setState(updater => ({
+      locations: locations
+    })
+    )
+
+  }
 
   //pass setUser and clearUser as props to the NavBar components
   render() {
     return (
       <React.Fragment>
+        <LocationData Elements={"issues"} getLocation={this.getLocation} />
         <NavBar user={this.state.user} level={this.state.level} clearUser={this.clearUser} />
-        <AppViews user={this.state.user} level={this.state.level} setUser={this.setUser} newUser={this.newUser} />
+        <AppViews user={this.state.user} level={this.state.level} locations={this.state.locations} setUser={this.setUser} newUser={this.newUser} />
       </React.Fragment>
     );
   }

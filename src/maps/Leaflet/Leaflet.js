@@ -37,11 +37,10 @@ export default class Leaflet extends Component {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
       maxZoom: 18,
       id: 'mapbox.streets',
-      accessToken: 'YOUR MAPBOX API KEY'
-      //accessToken: Token
+      //accessToken: 'YOUR MAPBOX API KEY'
+      accessToken: Token
     }).addTo(this.map);
 
-    // Murfreesboro: 35°50′46″N 86°23′31″W
     navigator.geolocation.getCurrentPosition(position => {
       const coords = position.coords;
       this.map.setView([coords.latitude, coords.longitude], 16);
@@ -52,12 +51,12 @@ export default class Leaflet extends Component {
     });
 
     // random location mark
-    L.marker([35.89336119702232, -86.33231166335291]).addTo(this.map)
-    //L.marker([35.94210041666666, -83.9531983888889]).addTo(this.map) // Knoxville mark
+    //L.marker([35.89336119702232, -86.33231166335291]).addTo(this.map)
+    // Murfreesboro: 35°50′46″N 86°23′31″W
     //L.marker(["35°50′46″N", "86°23′31″W"]).addTo(this.map)
     console.log("didMount - locations", this.props.locations)
     this.props.locations.map(location => {
-      return L.marker([location]).addTo(this.map)
+      return L.marker([location.latitude, location.longitude]).addTo(this.map)
     })
 
     // log user clicks
