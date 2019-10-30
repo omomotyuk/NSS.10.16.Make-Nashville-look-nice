@@ -5,7 +5,7 @@ import AppViews from "./AppViews";
 import "./App.css";
 import APIManager from "../modules/APIManager"
 import LocationData from "./LocationData"
-
+import IssueData from "./IssueData"
 
 class App extends Component {
 
@@ -22,6 +22,7 @@ class App extends Component {
       username: ""
     },
 
+    issues: [],
     locations: []
   };
 
@@ -176,34 +177,41 @@ class App extends Component {
 
 
   clearUser = () => {
-    localStorage.clear();
+    localStorage.clear()
 
     this.setState({
       user: this.isAuthenticated()
-    });
-  };
+    })
+  }
+
+  //
+  setIssues = (issues) => {
+    this.setState(updater => ({
+      issues: issues
+    })
+    )
+  }
 
   //
   getLocation = (locations) => {
-    //
-
     this.setState(updater => ({
       locations: locations
     })
     )
-
   }
 
   //pass setUser and clearUser as props to the NavBar components
   render() {
     return (
       <React.Fragment>
+        <IssueData Elements={"issues"} setIssues={this.setIssues} />
         <LocationData Elements={"issues"} getLocation={this.getLocation} />
         <NavBar user={this.state.user} level={this.state.level} clearUser={this.clearUser} />
-        <AppViews user={this.state.user} level={this.state.level} locations={this.state.locations} setUser={this.setUser} newUser={this.newUser} />
+        <AppViews user={this.state.user} level={this.state.level} issues={this.state.issues} locations={this.state.locations} setUser={this.setUser} newUser={this.newUser} />
       </React.Fragment>
-    );
+    )
   }
+
 }
 
-export default App;
+export default App

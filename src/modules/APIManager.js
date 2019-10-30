@@ -20,6 +20,7 @@ const API = {
     return fetch(`${remoteURL}/${database}?_expand=${expanded}`).then(e => e.json())
   },
   getAndFilter: (database, key, value) => {
+    //console.log("getAndFilter:", database, key, value)
     return fetch(`${remoteURL}/${database}?${key}=${value}`).then(e => e.json())
   },
   getFeed: (database, currentUser, friendsIdsString) => {

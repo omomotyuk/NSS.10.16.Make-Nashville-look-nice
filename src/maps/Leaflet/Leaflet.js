@@ -43,6 +43,7 @@ export default class Leaflet extends Component {
 
     navigator.geolocation.getCurrentPosition(position => {
       const coords = position.coords;
+      //console.log("current location:", coords)
       this.map.setView([coords.latitude, coords.longitude], 16);
 
       L.marker([coords.latitude, coords.longitude])
@@ -52,9 +53,10 @@ export default class Leaflet extends Component {
 
     // random location mark
     //L.marker([35.89336119702232, -86.33231166335291]).addTo(this.map)
+    // NSS location: latitude: 36.1277459, longitude: -86.72562409999999
     // Murfreesboro: 35°50′46″N 86°23′31″W
     //L.marker(["35°50′46″N", "86°23′31″W"]).addTo(this.map)
-    console.log("didMount - locations", this.props.locations)
+    //console.log("didMount - locations", this.props.locations)
     this.props.locations.map(location => {
       return L.marker([location.latitude, location.longitude]).addTo(this.map)
     })

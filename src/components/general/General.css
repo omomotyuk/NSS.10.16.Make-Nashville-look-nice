@@ -14,7 +14,8 @@
 }
 
 main {
-    flex: 3;
+    /* flex: 3; */
+    flex: 2;
     margin: 1em;
 }
 
@@ -48,4 +49,8 @@ img.test-photo {
 
 span.generalCardPhotoUser {
     color: blue;
+}
+
+span.generalCardIssueStatus {
+    color: red;
 }

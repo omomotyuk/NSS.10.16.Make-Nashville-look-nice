@@ -6,7 +6,8 @@ import "./General.css"
 
 class GeneralList extends Component {
     state = {
-        issues: []
+        issues: [],
+        checked: []
     }
 
     getData = (Elements) => {
@@ -21,6 +22,10 @@ class GeneralList extends Component {
     }
     //
 
+    //
+    onCheck = (id) => {
+        console.log("onCheck - id:", id)
+    }
     //
     componentDidMount() {
         //console.log("General list: ComponentDidMount", this.props.Elements);
@@ -42,6 +47,7 @@ class GeneralList extends Component {
                                         element={element}
                                         Elements={this.props.Elements}
                                         {...this.props}
+                                        onCheck={this.onCheck}
                                         getData={this.getData}
                                     />
                                 )

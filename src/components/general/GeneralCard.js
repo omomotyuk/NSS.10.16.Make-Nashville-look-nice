@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, CardFooter, CardTitle, Button, Form, FormGroup, Label, Input } from 'reactstrap';
-//import {  CardText } from 'reactstrap';
+import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
+//import {  CardText CardTitle, InputGroup, Row, Col, } from 'reactstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import APIManager from '../../modules/APIManager'
 //import GImage from "./GImage"
@@ -21,25 +21,6 @@ class GeneralCard extends Component {
     }
 
     //
-    handleWithdraw = (id) => {
-        console.log("handleWithdraw - id:", id)
-
-        let issue = this.props.element
-
-        issue.status = "withdrawn"
-
-        APIManager.update(issue, "issues").then(() => { })
-    }
-
-    //
-    handleComplain = () => {
-    }
-
-    handleDelete = (id) => {
-        APIManager.delete(this.props.Elements, id)
-            .then(() => this.props.getData(this.props.Elements))
-    }
-
     getPhoto = (issue) => {
         APIManager.get("photos", issue.reportPhoto).then((photo) => {
             //console.log("GeneralCard.getPhoto - photo:", photo)
@@ -62,8 +43,32 @@ class GeneralCard extends Component {
         })
     }
 
-    handleCommentFieldChange() {
+    //
+    handleWithdraw = (id) => {
+        console.log("handleWithdraw - id:", id)
 
+        let issue = this.props.element
+
+        issue.status = "withdrawn"
+
+        APIManager.update(issue, "issues").then(() => { })
+    }
+
+    handleComplain = () => {
+    }
+
+    handleDelete = (id) => {
+        APIManager.delete(this.props.Elements, id)
+            .then(() => this.props.getData(this.props.Elements))
+    }
+
+    handleCommentFieldChange() {
+    }
+
+    handleCheckBox = () => {
+        //console.log("handleCheckBox - on, id:", this.props.element.id)
+        this.props.onCheck(this.props.element.id)
+        //this.props.history.push("/")
     }
 
     componentDidMount() {
@@ -71,15 +76,36 @@ class GeneralCard extends Component {
         //console.log("GeneralCard.didMount - this.state.userId:", this.state.userId)
         this.getPhoto(this.props.element)
     }
+    //<CardTitle> {/*{this.props.element.fileName}*/}</CardTitle>
 
 
     render() {
         return (
             <Card>
                 <CardBody>
-
-                    <CardTitle> {/*{this.props.element.fileName}*/}</CardTitle>
-                    <CardHeader size="sm"><span className="generalCardPhotoUser">{this.state.user.userName}</span> on {this.state.date}<Button close /></CardHeader>
+                    <CardHeader size="sm">
+                        <InputGroupAddon addonType="append">
+                            <Badge color="primary"><span className="generalCardPhotoUser">{this.state.user.userName}</span></Badge>
+                            <Badge color="secondary">{this.state.date}</Badge>
+                            <Badge color="success"><span className="generalCardIssueStatus">{this.props.element.status}</span></Badge>
+                            <InputGroupText>
+                                <Input addon type="checkbox" aria-label="Checkbox for following text input" onClick={this.handleCheckBox} />
+                            </InputGroupText>
+                        </InputGroupAddon>
+                        {/*<Button close />
+                        <br />
+                        <InputGroup>*/}
+                        {/*<Badge color="danger"></Badge>
+                         <Row>
+                            <Col></Col>
+                            <Col></Col>
+                            <Col></Col>
+                            <Col></Col>
+                        </Row>
+                              <Input placeholder="Check it out" />*/}
+                        {/*</InputGroup>
+                        <br />*/}
+                    </CardHeader>
                     {/*<CardText>{this.props.element.fileName} is good</CardText>*/}
                     <img className="test-photo" src={require("../../photos/" + this.state.photo.fileName)} alt="test" />
                     {/* <Button color="primary" >Details</Button> */}
@@ -109,7 +135,7 @@ class GeneralCard extends Component {
                     }
 
                 </CardFooter>
-            </Card>
+            </Card >
         )
     }
 }
