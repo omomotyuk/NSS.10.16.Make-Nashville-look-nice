@@ -5,7 +5,7 @@ class GImage extends Component {
     render() {
         return (
             <>
-                <img className="test-photo" src={require(this.props.photo)} alt="test" />
+                <img className="test-photo" src={require("../../photos/test-photo.jpg")} alt="test" />
             </>
         )
     }

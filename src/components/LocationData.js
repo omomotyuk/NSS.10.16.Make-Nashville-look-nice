@@ -13,6 +13,7 @@ class LocationData extends Component {
     getIssues = (issues) => {
         APIManager.getAndFilter(issues, "status", "active")
             .then((allElements) => {
+                //console.log("getIssue - allElements:", allElements)
                 this.setState(() => {
                     return {
                         allElements: allElements
