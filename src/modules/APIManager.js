@@ -80,6 +80,17 @@ const API = {
     })
       .then(response => response.json())
   },
+  updateRecord: (table, id, data) => {
+    console.log("updateRecord - id:", id)
+    return fetch(`${remoteURL}/${table}/${id}`, {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(data)
+    }).then(data => data.json());
+  },
+
   // ----------------------------------------------
   delete: (id, database) => {
     return fetch(`${remoteURL}/${database}/${id}`, {

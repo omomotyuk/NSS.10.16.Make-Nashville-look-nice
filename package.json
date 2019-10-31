@@ -8,6 +8,7 @@
     "exif-js": "^2.3.0",
     "fontawesome": "^5.6.3",
     "leaflet": "^1.5.1",
+    "mdbreact": "^4.22.0",
     "react": "^16.10.2",
     "react-dom": "^16.10.2",
     "react-images-upload": "^1.2.7",

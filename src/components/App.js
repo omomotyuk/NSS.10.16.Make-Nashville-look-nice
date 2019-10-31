@@ -12,7 +12,7 @@ class App extends Component {
   state = {
     user: localStorage.getItem("credentials") !== null,
 
-    level: 0,
+    level: localStorage.getItem('userLevel'),
 
     query: {
       table: "users",
@@ -37,11 +37,15 @@ class App extends Component {
           //
           let returnedStorage = localStorage.getItem('credentials')
           let currentUser = JSON.parse(returnedStorage)[0]
+
+          localStorage.setItem("userLevel", currentUser.level)
+
           //console.log("checkLoginData credentials currentUser:", currentUser)
           //console.log("checkLoginData credentials currentUser.level:", currentUser.level)
           this.setState({
             user: this.isAuthenticated(),
-            level: currentUser.level
+            //level: currentUser.level
+            level: localStorage.getItem('userLevel')
           });
         } else {
           alert("Input data is not valid. Try again!");
@@ -180,8 +184,11 @@ class App extends Component {
     localStorage.clear()
 
     this.setState({
-      user: this.isAuthenticated()
+      user: this.isAuthenticated(),
+      level: localStorage.getItem('userLevel')
     })
+
+    document.location.reload()
   }
 
   //
@@ -200,6 +207,11 @@ class App extends Component {
     )
   }
 
+  reloadAll = () => {
+    //this.forceUpdate()
+    document.location.reload()
+  }
+
   //pass setUser and clearUser as props to the NavBar components
   render() {
     return (
@@ -207,7 +219,8 @@ class App extends Component {
         <IssueData Elements={"issues"} setIssues={this.setIssues} />
         <LocationData Elements={"issues"} getLocation={this.getLocation} />
         <NavBar user={this.state.user} level={this.state.level} clearUser={this.clearUser} />
-        <AppViews user={this.state.user} level={this.state.level} issues={this.state.issues} locations={this.state.locations} setUser={this.setUser} newUser={this.newUser} />
+        <AppViews user={this.state.user} level={this.state.level} issues={this.state.issues} locations={this.state.locations}
+          setUser={this.setUser} newUser={this.newUser} reload={this.reloadAll} />
       </React.Fragment>
     )
   }

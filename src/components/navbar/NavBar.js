@@ -10,15 +10,15 @@ class NavBar extends Component {
         this.props.history.push("/");
     };
 
-
-    userAccess = (level) => {
-        if (level <= parseInt(this.props.level)) {
-            return true
-        } else {
-            return false
+    /*
+        userAccess = (level) => {
+            if (level <= parseInt(this.props.level)) {
+                return true
+            } else {
+                return false
+            }
         }
-    }
-
+    */
 
     newLink = (path, title) => {
         const link = {
@@ -59,9 +59,13 @@ class NavBar extends Component {
                         <>
                             {
                                 this.newLinkList().map((link, index) => {
-                                    //console.log("NavBar.render: map.index:", index)
-                                    if (index <= this.props.level + 1) { return this.addLink(index, link.path, link.title) }
-                                    else { return null }
+                                    //console.log("NavBar.render: map.index:", index, this.props.level)
+                                    if (index <= parseInt(this.props.level) + 1) {
+                                        return this.addLink(index, link.path, link.title)
+                                    }
+                                    else {
+                                        return null
+                                    }
                                 })
                             }
                             <li>
