@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import GeneralCard from './GeneralCard';
 import APIManager from '../../modules/APIManager';
 import "./General.css"
-//import Leaflet from "../../maps/Leaflet/Leaflet"
+import Leaflet from "../../maps/Leaflet/Leaflet"
 import "../../../node_modules/leaflet/dist/leaflet.css"
 //import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
 import { Card, Button } from 'reactstrap';
@@ -21,11 +21,11 @@ class GeneralListMap extends Component {
 
     //
     onCheck = (id) => {
-        console.log("onCheck.b - checked:", this.state.checked)
+        //console.log("onCheck.b - checked:", this.state.checked)
         console.log("onCheck - id:", id)
-        this.setState((prev) => {
+        this.setState(() => {
             return {
-                checked: (prev.checked.has(id) ? prev.checked.set(id, !prev.checked.get(id)) : prev.checked.set(id, true))
+                checked: (this.state.checked.has(id) ? this.state.checked.delete(id) : this.state.checked.set(id, true))
             }
         })
         console.log("onCheck.e - checked:", this.state.checked)
@@ -40,34 +40,45 @@ class GeneralListMap extends Component {
     }
 
     updateChecked = () => {
-
         this.state.checked.forEach((value, key) => {
             console.log("updateChecked - id", key)
             console.log("updateChecked - this.state.checked", this.state.checked)
-            if (value) {
-
-                APIManager.get("issues", key)
-                    .then(issue => {
-                        issue.status = "closed"
-                        return (issue)
-                    })
-                    .then(issue => {
-                        APIManager.updateRecord("issues", key, issue)
-                    })
-                    .then(() => {
-                        this.setState((prev) => {
-                            console.log("updateChecked- setState - prev", prev)
+            APIManager.get("issues", key)
+                .then(issue => {
+                    issue.status = "closed"
+                    this.updateLocation(issue.id)
+                    return (issue)
+                })
+                .then(issue => {
+                    APIManager.updateRecord("issues", key, issue)
+                        .then(() => {
+                            this.props.reload()
+                        })
+                    /*.then(issue => {
+                        console.log("update issue", issue)
+                        this.setState((issue) => {
+                            console.log("this.state.checked", this.state.checked)
                             return {
-                                checked: (prev.checked.has(key) ? prev.checked.delete(key) : {})
+                                checked: this.state.checked.delete(issue.id)
                             }
                         })
-                    })
-            }
+                    })*/
+
+                })
         })
 
         return true
     }
+    //
+    updateLocation = (issue) => {
+        let returnedStorage = localStorage.getItem('locations')
+        let LSLocations = JSON.parse(returnedStorage)
+        //LSLocations = LSLocations.concat(this.newLocation(issue.id, photo.latitude, photo.longitude, photo.userId, photo.takenDate.substring(0, 10)))
+        LSLocations = LSLocations.filter(location => location.issue !== issue)
+        localStorage.setItem("locations", JSON.stringify(LSLocations));
+    }
 
+    //
     //
     uploadPhoto = () => { }
 
@@ -76,12 +87,8 @@ class GeneralListMap extends Component {
 
     //
     closeThemAll = () => {
-        console.log("closeThemAll.b - checked:", this.state.checked)
-
+        //console.log("closeThemAll.b - checked:", this.state.checked)
         this.updateChecked()
-        //.then(() => {
-        //this.props.reload()
-        //})
     }
 
     //
@@ -149,7 +156,7 @@ class GeneralListMap extends Component {
                         </article>
                     </aside>
                     <main>
-                        {/*<Leaflet locations={this.props.locations} />*/}
+                        <Leaflet locations={this.props.locations} />
                         {/*<img className="test-map" src={require("../../images/test-map.png")} alt="test map" />*/}
                     </main>
 

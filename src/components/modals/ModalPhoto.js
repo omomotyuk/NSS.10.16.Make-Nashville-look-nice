@@ -77,11 +77,22 @@ const ModalPhoto = (props) => {
         <ModalFooter>
           <InputGroup>
             <Input placeholder={Placeholder()} onChange={handleFieldChange} id="comment" />
-            <InputGroupAddon addonType="append">
-              <Button color="secondary" onClick={() => handleCommentSubmit()}>Submit</Button>
-            </InputGroupAddon>
+            {
+              (user.id === photo.userId) ? (
+                <>
+                  <InputGroupAddon addonType="append">
+                    <Button color="secondary" onClick={() => handleCommentSubmit()}>Submit</Button>
+                  </InputGroupAddon>
+                </>
+              ) : (
+                  <>
+                    <InputGroupAddon addonType="append">
+                      <Button color="secondary" >Submit</Button>
+                    </InputGroupAddon>
+                  </>
+                )
+            }
           </InputGroup>
-          {/* */}
           {
             (user.id === photo.userId) ? (
               <Button color="primary" onClick={() => handleWithdraw(element.id)}>Withdraw</Button>
@@ -89,7 +100,6 @@ const ModalPhoto = (props) => {
                 <Button color="danger" onClick={() => handleComplain()}>Complain</Button>
               )
           }
-          {/* */}
           {/*<Button color="primary" onClick={toggle}>Remove</Button>{' '}
           <Button color="secondary" onClick={toggle}>Cancel</Button>*/}
         </ModalFooter>

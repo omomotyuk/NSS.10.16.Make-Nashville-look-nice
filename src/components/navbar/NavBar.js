@@ -45,15 +45,28 @@ class NavBar extends Component {
     addLink = (key, path, title) => {
         return (
             <li className="nav-item" key={key}>
-                <Link className="nav-link" to={path}>{title}</Link>
+                <Link className="nav-link" to={path}>{title} </Link>
             </li>
         )
     }
 
+    showUser = () => {
+        //let returnedStorage = localStorage.getItem('credentials') !== null
+        let credentials = localStorage.getItem("credentials")// !== null
+
+        if (credentials !== null) {
+            let currentUser = JSON.parse(credentials)[0]
+            return ("Usename: " + currentUser.userName)
+        } else {
+            return ("")
+        }
+    }
 
     render() {
         return (
             <nav className="navbar navbar-light light-blue flex-md-nowrap p-0 shadow">
+                <span className="navbar-brand mb-0 h1">Make Nashville look nice</span>
+                <span className="navbar-text">{this.showUser()}</span>
                 <ul className="nav nav-pills nav-fill">
                     {this.props.user ? (
                         <>

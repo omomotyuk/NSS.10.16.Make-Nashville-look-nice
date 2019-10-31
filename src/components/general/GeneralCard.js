@@ -99,7 +99,7 @@ class GeneralCard extends Component {
                                 </InputGroupText>
                             </InputGroupAddon>
                         </InputGroup>
-                        <span className="generalCardPhotoUser">{this.state.user.userName} </span>
+                        <span className="generalCardPhotoUser">{this.state.user.userName} id# {this.state.user.id} </span>
                         <span className="generalCardIssueDate">{this.state.date} </span>
                         <span className="generalCardIssueStatus">{this.props.element.status} </span><br />
                     </CardHeader>
