@@ -5,8 +5,9 @@ class SignUp extends Component {
 
     // Set initial state
     state = {
-        name: "",
-        username: "",
+        firstName: "",
+        lastName: "",
+        userName: "",
         email: "",
         password: ""
     }
@@ -21,14 +22,11 @@ class SignUp extends Component {
     handleSignUp = (e) => {
 
         e.preventDefault()
-		/*
-			For now, just store the email and password that the customer enters into local storage.
-		*/
         //let credentials = { email: this.state.email, password: this.state.password }
-
         let inputData = {
-            name: this.state.name,
-            username: this.state.username,
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            userName: this.state.userName,
             email: this.state.email,
             password: this.state.password,
             password_confirm: this.state.password_confirm
@@ -51,16 +49,24 @@ class SignUp extends Component {
                                 </FormGroup>
                                 <FormGroup>
                                     <hr className="spider-web"></hr>
-                                    <Label htmlFor="name">Name</Label>
+                                    <Label htmlFor="firstName">First Name</Label>
                                     <Input onChange={this.handleFieldChange} type="text"
-                                        id="name"
-                                        placeholder="Name"
+                                        id="first-name"
+                                        placeholder="First name"
                                         required="" autoFocus="" />
                                 </FormGroup>
                                 <FormGroup>
-                                    <Label htmlFor="username">Username</Label>
+                                    <hr className="spider-web"></hr>
+                                    <Label htmlFor="lastName">Last Name</Label>
                                     <Input onChange={this.handleFieldChange} type="text"
-                                        id="username"
+                                        id="last-name"
+                                        placeholder="Last name"
+                                        required="" autoFocus="" />
+                                </FormGroup>
+                                <FormGroup>
+                                    <Label htmlFor="userName">Username</Label>
+                                    <Input onChange={this.handleFieldChange} type="text"
+                                        id="userName"
                                         placeholder="Username"
                                         required="" autoFocus="" />
                                 </FormGroup>
