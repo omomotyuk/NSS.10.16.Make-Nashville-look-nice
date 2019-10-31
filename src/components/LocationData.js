@@ -25,10 +25,11 @@ class LocationData extends Component {
                         .then((photo) => {
                             this.setState(prevState => {
                                 return {
-                                    locations: prevState.locations.concat(this.newLocation(photo.latitude, photo.longitude))
+                                    locations: prevState.locations.concat(this.newLocation(issue.id, photo.latitude, photo.longitude, photo.userId, photo.takenDate.substring(0, 10)))
                                 }
                             })
                             this.props.getLocation(this.state.locations);
+                            localStorage.setItem("locations", JSON.stringify(this.state.locations));
                         })
 
                 })
@@ -36,10 +37,13 @@ class LocationData extends Component {
     }
 
     //
-    newLocation = (latitude, longitude) => {
+    newLocation = (issue, latitude, longitude, user, date) => {
         const location = {
+            issue: issue,
             latitude: latitude,
-            longitude: longitude
+            longitude: longitude,
+            username: user,
+            date: date
         }
         return location
     }

@@ -57,8 +57,14 @@ export default class Leaflet extends Component {
     // Murfreesboro: 35°50′46″N 86°23′31″W
     //L.marker(["35°50′46″N", "86°23′31″W"]).addTo(this.map)
     //console.log("didMount - locations", this.props.locations)
-    this.props.locations.map(location => {
-      return L.marker([location.latitude, location.longitude]).addTo(this.map)
+
+    let returnedStorage = localStorage.getItem('locations')
+    let locations = JSON.parse(returnedStorage)
+    //console.log("localStorage - locations", locations)
+
+    //this.props.locations.map(location => {
+    locations.map(location => {
+      return (L.marker([location.latitude, location.longitude]).bindPopup("User ID:" + location.username + " " + location.date).addTo(this.map))
     })
 
     // log user clicks
@@ -68,8 +74,8 @@ export default class Leaflet extends Component {
       console.log(lat, lng);
     });
 
-    L.polyline(dummyDataPath)
-      .addTo(this.map);
+    /*L.polyline(dummyDataPath)
+      .addTo(this.map);*/
   }
 
   render() {

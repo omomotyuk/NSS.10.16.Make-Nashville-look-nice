@@ -87,11 +87,16 @@ class Upload extends Component {
                         console.log("new photo record data:", data)
                         issue.reportPhoto = data.id
                         alert("New photo " + photo.fileName + " added. Thanks for report!");
+                        return data
                     })
-                        .then(() => {
+                        .then((photo) => {
                             APIManager.putRecord("issues", issue).then(data => {
                                 console.log("new issue record data:", data)
+                                this.setLocation(issue, photo)
+
                                 alert("New issue created. Thanks for report!");
+
+                                this.props.reload()
                             })
                         })
                     //} else {
@@ -99,6 +104,26 @@ class Upload extends Component {
                     //}
                 }
             })
+    }
+
+
+    setLocation = (issue, photo) => {
+        let returnedStorage = localStorage.getItem('locations')
+        let LSLocations = JSON.parse(returnedStorage)
+        LSLocations = LSLocations.concat(this.newLocation(issue.id, photo.latitude, photo.longitude, photo.userId, photo.takenDate.substring(0, 10)))
+        localStorage.setItem("locations", JSON.stringify(LSLocations));
+    }
+
+    //
+    newLocation = (issue, latitude, longitude, user, date) => {
+        const location = {
+            issue: issue,
+            latitude: latitude,
+            longitude: longitude,
+            username: user,
+            date: date
+        }
+        return location
     }
 
 
