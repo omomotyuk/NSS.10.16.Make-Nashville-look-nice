@@ -7,7 +7,10 @@ import Upload from "./upload/Upload"
 import GeneralListMap from "./general/GeneralListMap";
 //import Leaflet from "../maps/Leaflet/Leaflet"
 //import OpenLayersMap from "../maps/OpenLayers/OpenLayersMap"
-import GImage from "./general/GImage"
+//import GImage from "./general/GImage"
+//import { Button } from 'reactstrap';
+//import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import ComplainModal from "./modals/ComplainModal"
 
 
 export default class AppViews extends Component {
@@ -20,6 +23,8 @@ export default class AppViews extends Component {
   userAccess = (level) => {
     //console.log("userAccess props.level:", this.props.level)
     if (level <= parseInt(this.props.level)) {
+      //if (level <= localStorage.getItem('userLevel')) {
+      //if (level <= this.props.user.level) {
       return true
     } else {
       return false
@@ -33,6 +38,9 @@ export default class AppViews extends Component {
     //this.getData(this.props.Elements)
   }
 
+  // Modal stuff
+  //[modal, setModal] = useState(false);
+  //toggle = () => setModal(!modal);
 
   render() {
     return (
@@ -41,7 +49,7 @@ export default class AppViews extends Component {
         <Route exact path="/" render={props => {
           if (this.props.user && this.userAccess(0)) {
             //return <GeneralList Elements={"issues"} {...props} />
-            return <GeneralListMap issues={this.props.issues} locations={this.props.locations} {...props} />
+            return <GeneralListMap issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...props} />
           } else {
             return <Redirect to="/signin" />;
           }
@@ -49,7 +57,7 @@ export default class AppViews extends Component {
 
         <Route exact path="/general" render={props => {
           if (this.props.user && this.userAccess(0)) {
-            return <GeneralListMap issues={this.props.issues} locations={this.props.locations} {...props} />
+            return <GeneralListMap issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...props} />
           } else {
             return <Redirect to="/signin" />;
           }
@@ -67,8 +75,7 @@ export default class AppViews extends Component {
         <Route exact path="/close" render={props => {
           if (this.props.user && this.userAccess(2)) {
             return (<>
-              <GeneralListMap issues={this.props.issues} locations={this.props.locations} {...props} />
-              <GImage />
+              <GeneralListMap issues={this.props.issues} locations={this.props.locations} reload={this.props.reload} level={this.props.level} {...props} />
             </>)
           } else {
             return <Redirect to="/signin" />;
@@ -77,7 +84,10 @@ export default class AppViews extends Component {
 
         <Route exact path="/complain" render={props => {
           if (this.props.user && this.userAccess(3)) {
-            return <GeneralListMap issues={this.props.issues} locations={this.props.locations} {...props} />
+            return (<>
+              <ComplainModal issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...props} />
+              <GeneralListMap issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...props} />
+            </>)
           } else {
             return <Redirect to="/signin" />;
           }

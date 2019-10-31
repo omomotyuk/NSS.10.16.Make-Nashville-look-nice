@@ -1,0 +1,26 @@
+
+.modal-photo-card {
+    width: 500px;    /* 50vw Occupy the 50% of the screen width */
+    max-width: 500px;
+}
+
+.modal-photo {
+    width: 80%;
+    /*width: 100px;*/
+}
+
+.modal-photo-username {
+    color: blue;
+}
+
+.modal-photo-date {
+    color: black;
+}
+
+.modal-photo-status {
+    color: red;
+}
+
+.modal-photo-comment {
+    width: 90%;
+}

@@ -1,8 +1,11 @@
 import React, { Component } from 'react';
-import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
+//import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
+import { Card, CardBody, CardHeader, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
 //import {  CardText CardTitle, InputGroup, Row, Col, } from 'reactstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import APIManager from '../../modules/APIManager'
+import ModalPhoto from "../modals/ModalPhoto"
+
 //import GImage from "./GImage"
 
 class GeneralCard extends Component {
@@ -78,6 +81,9 @@ class GeneralCard extends Component {
     }
     //<CardTitle> {/*{this.props.element.fileName}*/}</CardTitle>
 
+    showBigPhoto = () => {
+    }
+
 
     render() {
         return (
@@ -92,6 +98,8 @@ class GeneralCard extends Component {
                                 <Input addon type="checkbox" aria-label="Checkbox for following text input" onClick={this.handleCheckBox} />
                             </InputGroupText>
                         </InputGroupAddon>
+                        <ModalPhoto element={this.element} photo={this.state.photo} user={this.state.user} date={this.state.date} {...this.props} />
+
                         {/*<Button close />
                         <br />
                         <InputGroup>*/}
@@ -107,10 +115,12 @@ class GeneralCard extends Component {
                         <br />*/}
                     </CardHeader>
                     {/*<CardText>{this.props.element.fileName} is good</CardText>*/}
-                    <img className="test-photo" src={require("../../photos/" + this.state.photo.fileName)} alt="test" />
-                    {/* <Button color="primary" >Details</Button> */}
+                    <img className="test-photo" src={require("../../photos/" + this.state.photo.fileName)} alt="test"
+                        onClick={() => <ModalPhoto element={this.element} photo={this.state.photo} user={this.state.user} date={this.state.date} {...this.props} />} />
+                    {/* onClick={this.showBigPhoto} />
+                         <Button color="primary" >Details</Button> */}
                 </CardBody>
-                <CardFooter>
+                {/*<CardFooter>
                     <>
                         <Form>
                             <FormGroup>
@@ -126,7 +136,6 @@ class GeneralCard extends Component {
                     {
                         (this.state.userId === this.state.photo.userId) ? (
                             <>
-                                {/*console.log("GeneralCard.render - photo.userId:", this.state.photo.userId)*/}
                                 <Button className="btn btn-danger float-right" size="sm" onClick={() => this.handleWithdraw(this.props.element.id)}>Withdraw</Button>
                             </>
                         ) : (<>
@@ -134,7 +143,7 @@ class GeneralCard extends Component {
                         </>)
                     }
 
-                </CardFooter>
+                </CardFooter>*/}
             </Card >
         )
     }
