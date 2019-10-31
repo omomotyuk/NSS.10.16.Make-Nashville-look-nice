@@ -2,10 +2,13 @@ import React, { Component } from 'react';
 import GeneralCard from './GeneralCard';
 import APIManager from '../../modules/APIManager';
 import "./General.css"
-import Leaflet from "../../maps/Leaflet/Leaflet"
+//import Leaflet from "../../maps/Leaflet/Leaflet"
 import "../../../node_modules/leaflet/dist/leaflet.css"
 //import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
-import { Button } from 'reactstrap';
+import { Card, Button } from 'reactstrap';
+//import Upload from "../upload/Upload"
+//import ModalUpload from "../modals/ModalUpload"
+import ComplainModal from "../modals/ComplainModal"
 
 
 
@@ -65,6 +68,12 @@ class GeneralListMap extends Component {
     }
 
     //
+    uploadPhoto = () => { }
+
+    //
+    showComplains = () => { }
+
+    //
     closeThemAll = () => {
         console.log("closeThemAll.b - checked:", this.state.checked)
 
@@ -72,6 +81,38 @@ class GeneralListMap extends Component {
             .then(() => {
                 this.props.reload()
             })
+    }
+
+    //
+    showButton = () => {
+        switch (this.props.path) {
+            case "upload": {
+                return (
+                    //<ModalUpload issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...this.props} />
+                    //<Upload {...props} />
+                    <Card body>
+                        <Button color="danger" onClick={this.uploadPhoto}>Upload new photo</Button>
+                    </Card>
+                )
+            } break;
+            case "close": {
+                return (
+                    //<Card body>
+                    <Button color="danger" onClick={this.closeThemAll}>Close them all!</Button>
+                    //</Card>
+                )
+            } break;
+            case "complain": {
+                return (
+                    <ComplainModal issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...this.props} />
+
+                    /*<Card body>
+                        <Button color="danger" onClick={this.showComplains}>Show complains</Button>
+                    </Card>*/
+                )
+            } break;
+            default: { return null }
+        }
     }
 
 
@@ -84,7 +125,9 @@ class GeneralListMap extends Component {
                             {
                                 (parseInt(this.props.level) > 1) ? (
                                     <>
-                                        <Button color="danger" onClick={this.closeThemAll}>Close them all!</Button>
+                                        {
+                                            this.showButton()
+                                        }
                                     </>
                                 ) : (<></>)
                             }
@@ -105,7 +148,7 @@ class GeneralListMap extends Component {
                         </article>
                     </aside>
                     <main>
-                        <Leaflet locations={this.props.locations} />
+                        {/*<Leaflet locations={this.props.locations} />*/}
                         {/*<img className="test-map" src={require("../../images/test-map.png")} alt="test map" />*/}
                     </main>
 

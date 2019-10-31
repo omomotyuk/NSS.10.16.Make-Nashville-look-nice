@@ -11,15 +11,14 @@ class App extends Component {
 
   state = {
     user: localStorage.getItem("credentials") !== null,
-
     level: localStorage.getItem('userLevel'),
 
     query: {
       table: "users",
       email: "",
+      userName: "",
       password: "",
-      name: "",
-      username: ""
+      firstName: ""
     },
 
     issues: [],
@@ -65,8 +64,8 @@ class App extends Component {
         table: updater.query.table,
         email: authObj.email,
         password: authObj.password,
-        name: updater.query.name,
-        username: updater.query.username
+        firstName: updater.query.firstName,
+        userName: updater.query.userName
       }
     }), () => { this.checkLoginData() }
     )
@@ -127,13 +126,16 @@ class App extends Component {
     return 1;
   };
 
-
   newRecord = query => {
     const record = {
-      name: query.name,
-      username: query.username,
+      firstName: "",
+      lastName: "",
+      //name: query.name,
+      userName: query.userName,
+      email: query.email,
       password: query.password,
-      email: query.email
+      level: 1,
+      comment: ""
     };
     return record;
   };
@@ -143,10 +145,14 @@ class App extends Component {
 
     let query = {
       table: "users",
-      name: input.name,
-      username: input.username,
+      //name: input.name,
+      firstName: input.firstName,
+      lastName: input.lastName,
+      userName: input.userName,
       email: input.email,
       password: input.password,
+      level: 1,
+      comment: "",
       password_confirm: input.password_confirm
     }
 

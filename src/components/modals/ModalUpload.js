@@ -15,7 +15,7 @@ const ComplainModal = (props) => {
 
   return (
     <div>
-      <Button color="danger" onClick={toggle}>Show complains</Button>
+      <Button color="danger" onClick={toggle}>Upload new photo</Button>
       <Modal isOpen={modal} toggle={toggle} className={className}>
         <ModalHeader toggle={toggle}>Complains show modal</ModalHeader>
         <ModalBody>
