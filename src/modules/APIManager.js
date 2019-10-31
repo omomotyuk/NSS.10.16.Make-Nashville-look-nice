@@ -81,7 +81,7 @@ const API = {
       .then(response => response.json())
   },
   updateRecord: (table, id, data) => {
-    console.log("updateRecord - id:", id)
+    //console.log("updateRecord - id:", id)
     return fetch(`${remoteURL}/${table}/${id}`, {
       method: "PUT",
       headers: {
