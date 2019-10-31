@@ -21,13 +21,14 @@ class GeneralListMap extends Component {
 
     //
     onCheck = (id) => {
-        //console.log("onCheck - id:", id)
+        console.log("onCheck.b - checked:", this.state.checked)
+        console.log("onCheck - id:", id)
         this.setState((prev) => {
             return {
                 checked: (prev.checked.has(id) ? prev.checked.set(id, !prev.checked.get(id)) : prev.checked.set(id, true))
             }
         })
-        //console.log("checked:", this.state.checked)
+        console.log("onCheck.e - checked:", this.state.checked)
     }
 
     getData = () => {
@@ -41,8 +42,8 @@ class GeneralListMap extends Component {
     updateChecked = () => {
 
         this.state.checked.forEach((value, key) => {
-            console.log("closeThemAll - id", key)
-            console.log("this.state.checked", this.state.checked)
+            console.log("updateChecked - id", key)
+            console.log("updateChecked - this.state.checked", this.state.checked)
             if (value) {
 
                 APIManager.get("issues", key)
@@ -55,7 +56,7 @@ class GeneralListMap extends Component {
                     })
                     .then(() => {
                         this.setState((prev) => {
-                            console.log("prev", prev)
+                            console.log("updateChecked- setState - prev", prev)
                             return {
                                 checked: (prev.checked.has(key) ? prev.checked.delete(key) : {})
                             }
@@ -78,15 +79,15 @@ class GeneralListMap extends Component {
         console.log("closeThemAll.b - checked:", this.state.checked)
 
         this.updateChecked()
-            .then(() => {
-                this.props.reload()
-            })
+        //.then(() => {
+        //this.props.reload()
+        //})
     }
 
     //
     showButton = () => {
         switch (this.props.path) {
-            case "upload": {
+            case "upload":
                 return (
                     //<ModalUpload issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...this.props} />
                     //<Upload {...props} />
@@ -94,15 +95,15 @@ class GeneralListMap extends Component {
                         <Button color="danger" onClick={this.uploadPhoto}>Upload new photo</Button>
                     </Card>
                 )
-            } break;
-            case "close": {
+                break;
+            case "close":
                 return (
                     //<Card body>
                     <Button color="danger" onClick={this.closeThemAll}>Close them all!</Button>
                     //</Card>
                 )
-            } break;
-            case "complain": {
+                break;
+            case "complain":
                 return (
                     <ComplainModal issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...this.props} />
 
@@ -110,7 +111,7 @@ class GeneralListMap extends Component {
                         <Button color="danger" onClick={this.showComplains}>Show complains</Button>
                     </Card>*/
                 )
-            } break;
+                break;
             default: { return null }
         }
     }
