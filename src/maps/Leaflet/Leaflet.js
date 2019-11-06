@@ -44,9 +44,11 @@ export default class Leaflet extends Component {
     navigator.geolocation.getCurrentPosition(position => {
       const coords = position.coords;
       //console.log("current location:", coords)
-      this.map.setView([coords.latitude, coords.longitude], 16);
-
+      //this.map.setView([coords.latitude, coords.longitude], 16);
+      this.map.setView([35.8474785, -86.367514583333], 14);
+      //35.8474785, longitude: -86.36751458333333
       L.marker([coords.latitude, coords.longitude])
+        //L.marker([35.8474785, -86.367514583333])
         .bindPopup('This is your current <strong>location</strong>')
         .addTo(this.map);
     });
@@ -60,7 +62,7 @@ export default class Leaflet extends Component {
 
     let returnedStorage = localStorage.getItem('locations')
     let locations = JSON.parse(returnedStorage)
-    //console.log("localStorage - locations", locations)
+    console.log("localStorage - locations", locations)
 
     //this.props.locations.map(location => {
     locations.map(location => {
