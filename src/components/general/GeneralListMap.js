@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import GeneralCard from './GeneralCard';
 import APIManager from '../../modules/APIManager';
 import "./General.css"
-import Leaflet from "../../maps/Leaflet/Leaflet"
+//import Leaflet from "../../maps/Leaflet/Leaflet"
 import "../../../node_modules/leaflet/dist/leaflet.css"
 //import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
 import { Card, Button } from 'reactstrap';
 //import Upload from "../upload/Upload"
-//import ModalUpload from "../modals/ModalUpload"
+import UploadModal from "../modals/UploadModal"
 import ComplainModal from "../modals/ComplainModal"
 
 
@@ -96,11 +96,11 @@ class GeneralListMap extends Component {
         switch (this.props.path) {
             case "upload":
                 return (
-                    //<ModalUpload issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...this.props} />
+                    <UploadModal issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...this.props} />
                     //<Upload {...props} />
-                    <Card body>
-                        <Button color="danger" onClick={this.uploadPhoto}>Upload new photo</Button>
-                    </Card>
+                    //<Card body>
+                    //<Button color="danger" onClick={this.uploadPhoto}>Upload new photo</Button>
+                    //</Card>
                 )
                 break;
             case "close":
@@ -156,7 +156,7 @@ class GeneralListMap extends Component {
                         </article>
                     </aside>
                     <main>
-                        <Leaflet locations={this.props.locations} />
+                        {/* <Leaflet locations={this.props.locations} /> */}
                         {/*<img className="test-map" src={require("../../images/test-map.png")} alt="test map" />*/}
                     </main>
 

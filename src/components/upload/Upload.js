@@ -14,6 +14,7 @@ class Upload extends Component {
     state = {
         pictures: [],
         selectedFile: null,
+        filePath: "",
         fileName: "",
         photoData: null
     }
@@ -34,12 +35,19 @@ class Upload extends Component {
 
     //
     fileChangedHandler = event => {
-        //console.log("upload file name:", event.target.files[0].name)
+        console.log("upload file:", event.target.files[0])
+        //output.src = URL.createObjectURL(event.target.files[0]);
+        //let tmppath = window.URL.createObjectURL(event.target.files[0])
+        //console.log("upload file obj path:", tmppath)
+        //console.log("upload file tmp path:", $("img").fadeIn("fast").attr('src', tmppath))
+        console.log("upload file name:", event.target.files[0].name)
 
         this.setState({
             selectedFile: event.target.files[0],
+            filePath: URL.createObjectURL(event.target.files[0]),
             fileName: event.target.files[0].name,
             photoData: ExifData.getExifData(event.target.files[0])
+            //photoData: event.target.files[0].exifdata
         })
     }
 
@@ -49,13 +57,7 @@ class Upload extends Component {
         return new Date(t[0], t[1], t[2], t[3], t[4], t[5])
     }
 
-    //
-    uploadHandler = (e) => {
-        e.preventDefault()
-
-        var Convertor = new GPStoDegree(this.state.photoData)
-
-        let location = Convertor.getData()
+    uploadPhotoFile = (location) => {
 
         let photo = {
             fileName: this.state.fileName,
@@ -96,7 +98,7 @@ class Upload extends Component {
 
                                 alert("New issue created. Thanks for report!");
 
-                                this.props.reload()
+                                //this.props.reload()
                             })
                         })
                     //} else {
@@ -104,6 +106,25 @@ class Upload extends Component {
                     //}
                 }
             })
+    }
+
+
+
+    //
+    uploadHandler = (e) => {
+        e.preventDefault()
+
+        var Convertor = new GPStoDegree(this.state.photoData)
+
+        let location = Convertor.getData()
+
+        console.log("uploadHandler - location:", location, location.latitude, location.longitude.length)
+
+        if (location.latitude.length !== 0 && location.longitude.length !== 0) {
+            this.uploadPhotoFile(location)
+        } else {
+            alert("This photo doesn't contain location data!")
+        }
     }
 
 
@@ -152,6 +173,12 @@ class Upload extends Component {
                                             type="file"
                                             onChange={this.fileChangedHandler} />
                                     </FormGroup>
+                                    {this.state.filePath ? (<>
+                                        <img className="upload-photo" width="300" src={require("../../photos/" + this.state.fileName)} alt="test"
+                                        />
+                                    </>) : (<>
+                                    </>)
+                                    }
                                     <FormGroup>
                                         <Button type="submit">Upload</Button>
                                     </FormGroup>
@@ -166,3 +193,5 @@ class Upload extends Component {
 }
 
 export default Upload
+
+// onload={() => window.URL.revokeObjectURL(this.state.filePath)}

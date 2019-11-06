@@ -3,7 +3,7 @@ import React, { Component } from "react";
 import SignUp from "./auth/SignUp";
 import SignIn from "./auth/SignIn";
 //import GeneralList from "./general/GeneralList";
-import Upload from "./upload/Upload"
+//import Upload from "./modals/Upload"
 import GeneralListMap from "./general/GeneralListMap";
 //import Leaflet from "../maps/Leaflet/Leaflet"
 //import OpenLayersMap from "../maps/OpenLayers/OpenLayersMap"
@@ -64,10 +64,10 @@ export default class AppViews extends Component {
 
         <Route exact path="/upload" render={props => {
           if (this.props.user && this.userAccess(1)) {
-            return <Upload reload={this.props.reload} {...props} />
-            //return (<>
-            //<GeneralListMap path={"upload"} issues={this.props.issues} locations={this.props.locations} reload={this.props.reload} level={this.props.level} {...props} />
-            //</>)
+            //return <Upload reload={this.props.reload} {...props} />
+            return (<>
+              <GeneralListMap path={"upload"} issues={this.props.issues} locations={this.props.locations} reload={this.props.reload} level={this.props.level} {...props} />
+            </>)
           } else {
             return <Redirect to="/signin" />;
           }
