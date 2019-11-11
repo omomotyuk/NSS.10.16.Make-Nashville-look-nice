@@ -46,6 +46,9 @@ const API = {
     return fetch(`${remoteURL}/${query}`)
       .then(response => response.json())
   },
+  allRecords: (table) => {
+    return fetch(`${remoteURL}/${table}`).then(e => e.json())
+  },
   putRecord(table, input) {
     let query = ""
 

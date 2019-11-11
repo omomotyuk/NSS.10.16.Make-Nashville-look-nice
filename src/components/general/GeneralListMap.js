@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
-import GeneralCard from './GeneralCard';
+import GeneralCardList from './GeneralCardList';
 import APIManager from '../../modules/APIManager';
 import "./General.css"
 //import Leaflet from "../../maps/Leaflet/Leaflet"
 import "../../../node_modules/leaflet/dist/leaflet.css"
 //import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
-import { Card, Button } from 'reactstrap';
+import { Button } from 'reactstrap';
 //import Upload from "../upload/Upload"
 import UploadModal from "../modals/UploadModal"
 import ComplainModal from "../modals/ComplainModal"
@@ -16,7 +16,8 @@ class GeneralListMap extends Component {
 
     state = {
         issues: [],
-        checked: new Map()
+        checked: new Map(),
+        complains: []
     }
 
     //
@@ -32,11 +33,6 @@ class GeneralListMap extends Component {
     }
 
     getData = () => {
-    }
-
-    componentDidMount() {
-        //console.log("didMount - props", this.props)
-        //console.log("didMount - path:", this.props.match.path)
     }
 
     updateChecked = () => {
@@ -92,6 +88,37 @@ class GeneralListMap extends Component {
     }
 
     //
+    getComplains = () => {
+        //console.log("getComplains.b")
+        APIManager.allRecords("issues")
+            .then(complainList => {
+                this.setState(() => {
+                    return {
+                        complains: complainList.filter(issue => issue.complain !== "")
+                    }
+                })
+            })
+            .then(() => {
+                //console.log("getComplains - complains", this.state.complains)
+            })
+        /*
+  .then(list => {
+
+    list.forEach(issue => {
+      APIManager.getRecord("users", issue.userId)
+        .then((record) => {
+          issue.username = record.username
+        })
+    })
+    return (list)
+  })
+  .then(list => {
+    console.log("getComplains - list with username:", list)
+  })
+*/
+    }
+
+    //
     showButton = () => {
         switch (this.props.path) {
             case "upload":
@@ -112,7 +139,15 @@ class GeneralListMap extends Component {
                 break;
             case "complain":
                 return (
-                    <ComplainModal issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...this.props} />
+                    <ComplainModal
+                        users={this.props.users}
+                        issues={this.props.issues}
+                        photos={this.props.photos}
+                        locations={this.props.locations}
+                        level={this.props.level}
+                        complains={this.state.complains}
+                        newLevel={this.props.setLevel}
+                        {...this.props} />
 
                     /*<Card body>
                         <Button color="danger" onClick={this.showComplains}>Show complains</Button>
@@ -124,24 +159,38 @@ class GeneralListMap extends Component {
     }
 
 
+    componentDidMount() {
+        //console.log("didMount - props", this.props)
+        //console.log("didMount - path:", this.props.match.path)
+        this.getComplains()
+    }
+
+
     render() {
         return (
             <>
                 <div className="map-flex-container">
                     <aside>
+                        {
+                            (parseInt(this.props.level) > 0) ? (
+                                <>
+                                    {
+                                        this.showButton()
+                                    }
+                                </>
+                            ) : (<></>)
+                        }
                         <article>
-                            {
-                                (parseInt(this.props.level) > 1) ? (
-                                    <>
-                                        {
-                                            this.showButton()
-                                        }
-                                    </>
-                                ) : (<></>)
-                            }
 
                             {/*<h1>{this.props.Elements} List</h1>*/}
-                            {
+                            <GeneralCardList
+                                issues={this.state.issues}
+                                Elements={"issues"}
+                                {...this.props}
+                                onCheck={this.onCheck}
+                                getData={this.getData}
+                            />
+                            {/*
                                 this.props.issues.map(element =>
                                     <GeneralCard
                                         key={element.id}
@@ -152,7 +201,7 @@ class GeneralListMap extends Component {
                                         getData={this.getData}
                                     />
                                 )
-                            }
+                                */}
                         </article>
                     </aside>
                     <main>

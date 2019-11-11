@@ -29,7 +29,7 @@ export default class Leaflet extends Component {
     this.map = L.map('map').setView([36, -86.5], 10);
 
     //
-    console.log("Map size: ", this.map.getSize())
+    //console.log("Map size: ", this.map.getSize())
     //this.map.invalidateSize()
 
     // add basemap
@@ -62,7 +62,7 @@ export default class Leaflet extends Component {
 
     let returnedStorage = localStorage.getItem('locations')
     let locations = JSON.parse(returnedStorage)
-    console.log("localStorage - locations", locations)
+    //console.log("localStorage - locations", locations)
 
     //this.props.locations.map(location => {
     locations.map(location => {

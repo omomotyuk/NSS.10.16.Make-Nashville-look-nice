@@ -87,7 +87,15 @@ export default class AppViews extends Component {
         <Route exact path="/complain" render={props => {
           if (this.props.user && this.userAccess(3)) {
             return (<>
-              <GeneralListMap path={"complain"} issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...props} />
+              <GeneralListMap
+                path={"complain"}
+                users={this.props.users}
+                issues={this.props.issues}
+                photos={this.props.photos}
+                locations={this.props.locations}
+                level={this.props.level}
+                setLevel={this.props.setLevel}
+                {...props} />
             </>)
           } else {
             return <Redirect to="/signin" />;
