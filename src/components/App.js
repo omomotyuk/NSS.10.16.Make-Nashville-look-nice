@@ -5,7 +5,8 @@ import AppViews from "./AppViews";
 import "./App.css";
 import APIManager from "../modules/APIManager"
 import LocationData from "./LocationData"
-import IssueData from "./IssueData"
+//import IssueData from "./IssueData"
+import ActiveData from "./ActiveData"
 
 class App extends Component {
 
@@ -21,7 +22,9 @@ class App extends Component {
       firstName: ""
     },
 
+    users: [],
     issues: [],
+    photos: [],
     locations: []
   };
 
@@ -197,12 +200,50 @@ class App extends Component {
     document.location.reload()
   }
 
+  setUsers = (data) => {
+    this.setState(() => ({
+      users: data
+    }))
+  }
+
   //
   setIssues = (issues) => {
     this.setState(updater => ({
       issues: issues
     })
     )
+  }
+
+  setPhotos = (data) => {
+    this.setState(() => ({
+      photos: data
+    }))
+  }
+
+  setLevel = (id, level) => {
+    console.log("setLevel - id,level", id, level)
+
+    APIManager.get("users", id)
+      .then(user => {
+        user.level = level
+        //this.updateLocation(issue.id)
+        return (user)
+      })
+      .then(user => {
+        APIManager.updateRecord("users", id, user)
+          .then(() => {
+            //this.props.reload()
+            APIManager.allRecords("users").then((users) => {
+              //console.log("GeneralList.getData - issues:", issues)
+              this.setState(() => {
+                return {
+                  users: users
+                }
+              })
+            })
+            //
+          })
+      })
   }
 
   //
@@ -221,13 +262,24 @@ class App extends Component {
   //pass setUser and clearUser as props to the NavBar components
   render() {
     return (
-      <React.Fragment>
-        <IssueData Elements={"issues"} setIssues={this.setIssues} />
-        <LocationData Elements={"issues"} getLocation={this.getLocation} />
+      <React.Fragment >
+        <ActiveData setUsers={this.setUsers} setIssues={this.setIssues} setPhotos={this.setPhotos} />
+        {/*
+          <IssueData Elements={"issues"} setIssues={this.setIssues} />
+*/}
+        < LocationData Elements={"issues"} getLocation={this.getLocation} />
         <NavBar user={this.state.user} level={this.state.level} clearUser={this.clearUser} />
-        <AppViews user={this.state.user} level={this.state.level} issues={this.state.issues} locations={this.state.locations}
-          setUser={this.setUser} newUser={this.newUser} reload={this.reloadAll} />
-      </React.Fragment>
+        <AppViews user={this.state.user}
+          level={this.state.level}
+          users={this.state.users}
+          issues={this.state.issues}
+          photos={this.state.photos}
+          locations={this.state.locations}
+          setUser={this.setUser}
+          newUser={this.newUser}
+          setLevel={this.setLevel}
+          reload={this.reloadAll} />
+      </React.Fragment >
     )
   }
 }

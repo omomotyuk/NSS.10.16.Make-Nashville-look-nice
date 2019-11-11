@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 //import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
-import { Card, CardBody, CardHeader, Input, InputGroup, InputGroupAddon, InputGroupText } from 'reactstrap';
+import { Card, CardBody, CardHeader, Input, InputGroup, InputGroupAddon, InputGroupText, CardImg } from 'reactstrap';
 //import {  CardText CardTitle, InputGroup, Row, Col, } from 'reactstrap';
 //import 'bootstrap/dist/css/bootstrap.min.css';
 import APIManager from '../../modules/APIManager'
 import ModalPhoto from "../modals/ModalPhoto"
+import ModalPhotoI from "../modals/ModalPhotoI"
 
 //import GImage from "./GImage"
 
@@ -13,7 +14,7 @@ class GeneralCard extends Component {
     state = {
         path: "../../photos/",
         photo: {
-            fileName: "test-photo.jpg"
+            fileName: "photo.jpg"
         },
         userId: JSON.parse(localStorage.getItem("credentials"))[0].id,
         //username: JSON.parse(localStorage.getItem("credentials"))[0].username
@@ -82,6 +83,15 @@ class GeneralCard extends Component {
     //<CardTitle> {/*{this.props.element.fileName}*/}</CardTitle>
 
     showBigPhoto = () => {
+        return (
+            <>
+                <ModalPhotoI element={this.element} photo={this.state.photo} user={this.state.user} date={this.state.date} {...this.props} />
+            </>
+        )
+    }
+
+    imgClick = () => {
+        alert("Make it big!")
     }
 
 
@@ -121,8 +131,27 @@ class GeneralCard extends Component {
                     {/*</InputGroup>
                         <br />*/}
                     {/*<CardText>{this.props.element.fileName} is good</CardText>*/}
-                    <img className="test-photo" src={require("../../photos/" + this.state.photo.fileName)} alt="test"
-                        onClick={() => <ModalPhoto element={this.element} photo={this.state.photo} user={this.state.user} date={this.state.date} {...this.props} />} />
+                    <CardImg className="test-photo" src={require("../../photos/" + this.state.photo.fileName)} alt="test"
+                        onClick={this.showBigPhoto}
+                    />
+                    {/*                         
+
+                                            onClick={(<ModalPhoto element={this.element} photo={this.state.photo} user={this.state.user} date={this.state.date} {...this.props} />)}
+
+                                            onClick={(event) => (
+                            <>
+                                (event !== null) ? (
+                                    <>
+                                    <ModalPhoto element={this.element} photo={this.state.photo} user={this.state.user} date={this.state.date} {...this.props} />
+                                </>
+                                ) : (null)
+                            </>
+                        )}
+
+                    onClick={this.showBigPhoto()}
+
+                            onClick={() => <ModalPhoto element={this.element} photo={this.state.photo} user={this.state.user} date={this.state.date} {...this.props} />}
+                    */}
                     {/* onClick={this.showBigPhoto} />
                          <Button color="primary" >Details</Button> */}
                 </CardBody>

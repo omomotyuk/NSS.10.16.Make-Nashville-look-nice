@@ -18,8 +18,8 @@ const UploadModal = (props) => {
   } = props;
 
   // Set initial state
-  let pictures = []
-  let selectedFile = null
+  //let pictures = []
+  //let selectedFile = null
   let filePath = ""
   let fileName = ""
   let photoData = null
@@ -39,15 +39,15 @@ const UploadModal = (props) => {
   }*/
 
   //
-  const handleUpload = (e) => {
+  /*const handleUpload = (e) => {
     e.preventDefault()
     //
     //this.props.history.push("/");
-  }
+  }*/
 
   //
   const fileChangedHandler = event => {
-    console.log("upload file:", event.target.files[0])
+    //console.log("upload file:", event.target.files[0])
     //output.src = URL.createObjectURL(event.target.files[0]);
     //let tmppath = window.URL.createObjectURL(event.target.files[0])
     //console.log("upload file obj path:", tmppath)
@@ -55,14 +55,14 @@ const UploadModal = (props) => {
     console.log("upload file name:", event.target.files[0].name)
 
     //this.setState({
-    selectedFile = event.target.files[0]
+    //selectedFile = event.target.files[0]
     filePath = URL.createObjectURL(event.target.files[0])
     console.log("fileChangedHandler - filePath", filePath)
     fileName = event.target.files[0].name
     photoData = ExifData.getExifData(event.target.files[0])
 
     //window.location.reload(true)
-    window.opener.refresh()
+    //window.opener.refresh()
     //photoData: event.target.files[0].exifdata
     //})
   }
@@ -88,8 +88,9 @@ const UploadModal = (props) => {
     let issue = {
       reportPhoto: 1,
       closePhoto: 0,
-      comment: "",
       status: "active",
+      comment: "",
+      complain: "",
       userId: JSON.parse(localStorage.getItem("credentials"))[0].id
     }
 
@@ -102,14 +103,14 @@ const UploadModal = (props) => {
           //if (this.verifyInput(query)) {
           //const record = this.newRecord(query);
           APIManager.putRecord("photos", photo).then(data => {
-            console.log("new photo record data:", data)
+            //console.log("new photo record data:", data)
             issue.reportPhoto = data.id
             alert("New photo " + photo.fileName + " added. Thanks for report!");
             return data
           })
             .then((photo) => {
               APIManager.putRecord("issues", issue).then(data => {
-                console.log("new issue record data:", data)
+                //console.log("new issue record data:", data)
                 setLocation(issue, photo)
 
                 alert("New issue created. Thanks for report!");
@@ -134,7 +135,7 @@ const UploadModal = (props) => {
 
     let location = Convertor.getData()
 
-    console.log("uploadHandler - location:", location, location.latitude, location.longitude.length)
+    //console.log("uploadHandler - location:", location, location.latitude, location.longitude.length)
 
     if (location.latitude.length !== 0 && location.longitude.length !== 0) {
       uploadPhotoFile(location)
@@ -185,7 +186,7 @@ const UploadModal = (props) => {
                         {console.log("return - ok - filePath", filePath)}
                         <CardImg className="upload-photo" width="300" src={require("../../photos/" + fileName)} alt="test" />
                       </>) : (<>
-                        {console.log("return - no - filePath", filePath)}
+                        {/*console.log("return - no - filePath", filePath)*/}
                       </>)
                     }
                   </Card>
@@ -224,5 +225,3 @@ const UploadModal = (props) => {
 }
 
 export default UploadModal
-
-// onload={() => window.URL.revokeObjectURL(this.state.filePath)}

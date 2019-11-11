@@ -24,6 +24,7 @@ const ModalPhoto = (props) => {
 
   let comment = ""
   let placeholder = "No comment yet."
+  let username = JSON.parse(localStorage.getItem("credentials"))[0]
 
 
   const Placeholder = () => {
@@ -40,7 +41,12 @@ const ModalPhoto = (props) => {
     APIManager.updateRecord("issues", record.id, record)
   }
 
-  const handleComplain = () => { }
+  const handleComplain = (id) => {
+    console.log("handleComplain - issue id:", id)
+    let record = element
+    record.complain = comment
+    APIManager.updateRecord("issues", record.id, record)
+  }
 
   //const handleCommentFieldChange = () => { }
 
@@ -78,7 +84,7 @@ const ModalPhoto = (props) => {
           <InputGroup>
             <Input placeholder={Placeholder()} onChange={handleFieldChange} id="comment" />
             {
-              (user.id === photo.userId) ? (
+              (username.id === photo.userId) ? (
                 <>
                   <InputGroupAddon addonType="append">
                     <Button color="secondary" onClick={() => handleCommentSubmit()}>Submit</Button>
@@ -94,10 +100,16 @@ const ModalPhoto = (props) => {
             }
           </InputGroup>
           {
-            (user.id === photo.userId) ? (
-              <Button color="primary" onClick={() => handleWithdraw(element.id)}>Withdraw</Button>
+            (username.id === photo.userId) ? (
+              //{console.log("Button Withdraw - username.id, photo.userId", username.id, photo.userId)}
+              <>
+                <Button color="primary" onClick={() => handleWithdraw(element.id)}>Withdraw</Button>
+              </>
             ) : (
-                <Button color="danger" onClick={() => handleComplain()}>Complain</Button>
+                //{ console.log("Button Complain - username.id, photo.userId", username.id, photo.userId) }
+                <>
+                  <Button color="danger" onClick={() => handleComplain(element.id)}>Complain</Button>
+                </>
               )
           }
           {/*<Button color="primary" onClick={toggle}>Remove</Button>{' '}
