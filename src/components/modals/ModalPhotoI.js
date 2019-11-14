@@ -1,9 +1,14 @@
 /* eslint react/no-multi-comp: 0, react/prop-types: 0 */
 import React, { useState } from 'react';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter, Input, InputGroup, InputGroupAddon, Card, CardImg } from 'reactstrap';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Input, InputGroup, InputGroupAddon, Card, CardImg } from 'reactstrap';
 import APIManager from '../../modules/APIManager';
 import "./ModalPhoto.css"
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
+//
 const ModalPhoto = (props) => {
   const {
     //buttonLabel,
@@ -15,17 +20,13 @@ const ModalPhoto = (props) => {
   } = props;
 
   const [modal, setModal] = useState(false);
-  const [show, setShow] = useState(false);
 
   let comment = ""
   let placeholder = "No comment yet."
   let username = JSON.parse(localStorage.getItem("credentials"))[0]
 
   //
-  const toggle = () => {
-    setModal(!modal);
-    setShow(true)
-  }
+  const toggle = () => setModal(!modal);
 
   //
   const Placeholder = () => {
@@ -48,6 +49,7 @@ const ModalPhoto = (props) => {
     record.complain = comment
     APIManager.updateRecord("issues", record.id, record)
   }
+
   //
   const handleCommentSubmit = () => {
     let record = element
@@ -63,11 +65,11 @@ const ModalPhoto = (props) => {
   //
   return (
     <div>
-      <Button color="danger" size="sm" onClick={toggle}><span style={{ font: "2em" }}>big</span></Button>
-      <Modal isOpen={modal} toggle={toggle} className="modal-photo-card" show={show} onHide={() => setShow(false)} dialogClassName="modal-90w">
+      <Modal isOpen={modal} toggle={toggle} className="modal-photo-card">
         <ModalHeader toggle={toggle}>
           <span className="modal-photo-username">{user.userName} </span>
           <span className="modal-photo-date">{date} </span>
+          <span className="modal-photo-status">{element.status} </span>
         </ModalHeader>
         <ModalBody>
           <Card>
@@ -102,14 +104,11 @@ const ModalPhoto = (props) => {
               <>
                 <Button color="primary" onClick={() => handleWithdraw(element.id)}>Withdraw</Button>
               </>
-            ) : (null)
-          }
-          {
-            (username.id !== photo.userId && username.level !== 0) ? (
-              <>
-                <Button color="danger" onClick={() => handleComplain(element.id)}>Complain</Button>
-              </>
-            ) : (null)
+            ) : (
+                <>
+                  <Button color="danger" onClick={() => handleComplain(element.id)}>Complain</Button>
+                </>
+              )
           }
         </ModalFooter>
       </Modal>

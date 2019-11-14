@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import APIManager from "../modules/APIManager"
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
-
+//
 class LocationData extends Component {
 
     state = {
@@ -13,7 +16,6 @@ class LocationData extends Component {
     getIssues = (issues) => {
         APIManager.getAndFilter(issues, "status", "active")
             .then((allElements) => {
-                //console.log("getIssue - allElements:", allElements)
                 this.setState(() => {
                     return {
                         allElements: allElements
@@ -25,13 +27,18 @@ class LocationData extends Component {
                         .then((photo) => {
                             this.setState(prevState => {
                                 return {
-                                    locations: prevState.locations.concat(this.newLocation(issue.id, photo.latitude, photo.longitude, photo.userId, photo.takenDate.substring(0, 10)))
+                                    locations: prevState.locations.concat(this.newLocation(
+                                        issue.id,
+                                        photo.latitude,
+                                        photo.longitude,
+                                        photo.userId,
+                                        photo.takenDate.substring(0, 10))
+                                    )
                                 }
                             })
                             this.props.getLocation(this.state.locations);
                             localStorage.setItem("locations", JSON.stringify(this.state.locations));
                         })
-
                 })
             })
     }
@@ -53,12 +60,12 @@ class LocationData extends Component {
         this.getIssues(this.props.Elements)
     }
 
+    //
     render() {
         return (
             <></>
         )
     }
-
 }
 
 export default LocationData

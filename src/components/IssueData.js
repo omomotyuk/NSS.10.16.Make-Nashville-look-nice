@@ -1,7 +1,10 @@
 import React, { Component } from "react";
 import APIManager from "../modules/APIManager"
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
-
+//
 class IssueData extends Component {
 
     state = {
@@ -11,13 +14,11 @@ class IssueData extends Component {
     //
     getIssues = (Elements) => {
         APIManager.getAndFilter(Elements, "status", "active").then((issues) => {
-            //console.log("GeneralList.getData - issues:", issues)
             this.setState(() => {
                 return {
                     issues: issues
                 }
             })
-            //
             this.props.setIssues(this.state.issues)
         })
     }
@@ -27,6 +28,7 @@ class IssueData extends Component {
         this.getIssues(this.props.Elements)
     }
 
+    //
     render() {
         return (
             <></>

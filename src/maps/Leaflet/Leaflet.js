@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import L from 'leaflet';
 import Token from '../../Token.js'
-//import { LeafletModule } from '@asymmetrik/ngx-leaflet'
 // marker loading problem: https://github.com/Leaflet/Leaflet/issues/4968
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -26,7 +25,8 @@ export default class Leaflet extends Component {
 
   componentDidMount() {
     // create map
-    this.map = L.map('map').setView([36, -86.5], 10);
+    //this.map = L.map('map').setView([36, -86.5], 10);
+    this.map = L.map('map').setView([35.84943466666667, -86.35993719444444], 16);
 
     //
     //console.log("Map size: ", this.map.getSize())
@@ -41,17 +41,18 @@ export default class Leaflet extends Component {
       accessToken: Token
     }).addTo(this.map);
 
-    navigator.geolocation.getCurrentPosition(position => {
+    /*navigator.geolocation.getCurrentPosition(position => {
       const coords = position.coords;
       //console.log("current location:", coords)
       //this.map.setView([coords.latitude, coords.longitude], 16);
-      this.map.setView([35.8474785, -86.367514583333], 14);
+      //this.map.setView([35.8474785, -86.367514583333], 16);
+      this.map.setView([35.84943466666667, -86.35993719444444], 16);
       //35.8474785, longitude: -86.36751458333333
       L.marker([coords.latitude, coords.longitude])
         //L.marker([35.8474785, -86.367514583333])
         .bindPopup('This is your current <strong>location</strong>')
         .addTo(this.map);
-    });
+    });*/
 
     // random location mark
     //L.marker([35.89336119702232, -86.33231166335291]).addTo(this.map)

@@ -1,6 +1,10 @@
 import React, { Component } from "react"
 import { Button, Form, FormGroup, Label, Input, Card, CardBody, Row, Col } from 'reactstrap'
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
+//
 class SignUp extends Component {
 
     // Set initial state
@@ -19,10 +23,10 @@ class SignUp extends Component {
         this.setState(stateToChange)
     }
 
+    //
     handleSignUp = (e) => {
 
         e.preventDefault()
-        //let credentials = { email: this.state.email, password: this.state.password }
         let inputData = {
             firstName: this.state.firstName,
             lastName: this.state.lastName,
@@ -31,12 +35,11 @@ class SignUp extends Component {
             password: this.state.password,
             password_confirm: this.state.password_confirm
         }
-
         this.props.newUser(inputData);
         this.props.history.push("/");
-
     }
 
+    //
     render() {
         return (
             <Row className="my-5">
@@ -95,7 +98,6 @@ class SignUp extends Component {
                                 <FormGroup>
                                     <Button type="submit">Sign Up</Button>
                                 </FormGroup>
-
                             </Form>
                         </CardBody>
                     </Card>

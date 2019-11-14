@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
+import { Button } from 'reactstrap';
 import GeneralCardList from './GeneralCardList';
 import APIManager from '../../modules/APIManager';
-import "./General.css"
-//import Leaflet from "../../maps/Leaflet/Leaflet"
+import Leaflet from "../../maps/Leaflet/Leaflet"
 import "../../../node_modules/leaflet/dist/leaflet.css"
-//import { Card, CardBody, CardHeader, CardFooter, Button, Form, FormGroup, Label, Input, InputGroupAddon, InputGroupText, Badge } from 'reactstrap';
-import { Button } from 'reactstrap';
-//import Upload from "../upload/Upload"
 import UploadModal from "../modals/UploadModal"
 import ComplainModal from "../modals/ComplainModal"
+import "./General.css"
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
-
-
+//
 class GeneralListMap extends Component {
 
     state = {
@@ -22,23 +22,20 @@ class GeneralListMap extends Component {
 
     //
     onCheck = (id) => {
-        //console.log("onCheck.b - checked:", this.state.checked)
-        console.log("onCheck - id:", id)
         this.setState(() => {
             return {
                 checked: (this.state.checked.has(id) ? this.state.checked.delete(id) : this.state.checked.set(id, true))
             }
         })
-        console.log("onCheck.e - checked:", this.state.checked)
     }
 
+    //
     getData = () => {
     }
 
+    //
     updateChecked = () => {
         this.state.checked.forEach((value, key) => {
-            console.log("updateChecked - id", key)
-            console.log("updateChecked - this.state.checked", this.state.checked)
             APIManager.get("issues", key)
                 .then(issue => {
                     issue.status = "closed"
@@ -50,31 +47,19 @@ class GeneralListMap extends Component {
                         .then(() => {
                             this.props.reload()
                         })
-                    /*.then(issue => {
-                        console.log("update issue", issue)
-                        this.setState((issue) => {
-                            console.log("this.state.checked", this.state.checked)
-                            return {
-                                checked: this.state.checked.delete(issue.id)
-                            }
-                        })
-                    })*/
-
                 })
         })
-
         return true
     }
+
     //
     updateLocation = (issue) => {
         let returnedStorage = localStorage.getItem('locations')
         let LSLocations = JSON.parse(returnedStorage)
-        //LSLocations = LSLocations.concat(this.newLocation(issue.id, photo.latitude, photo.longitude, photo.userId, photo.takenDate.substring(0, 10)))
         LSLocations = LSLocations.filter(location => location.issue !== issue)
         localStorage.setItem("locations", JSON.stringify(LSLocations));
     }
 
-    //
     //
     uploadPhoto = () => { }
 
@@ -83,13 +68,11 @@ class GeneralListMap extends Component {
 
     //
     closeThemAll = () => {
-        //console.log("closeThemAll.b - checked:", this.state.checked)
         this.updateChecked()
     }
 
     //
     getComplains = () => {
-        //console.log("getComplains.b")
         APIManager.allRecords("issues")
             .then(complainList => {
                 this.setState(() => {
@@ -98,24 +81,6 @@ class GeneralListMap extends Component {
                     }
                 })
             })
-            .then(() => {
-                //console.log("getComplains - complains", this.state.complains)
-            })
-        /*
-  .then(list => {
-
-    list.forEach(issue => {
-      APIManager.getRecord("users", issue.userId)
-        .then((record) => {
-          issue.username = record.username
-        })
-    })
-    return (list)
-  })
-  .then(list => {
-    console.log("getComplains - list with username:", list)
-  })
-*/
     }
 
     //
@@ -123,18 +88,17 @@ class GeneralListMap extends Component {
         switch (this.props.path) {
             case "upload":
                 return (
-                    <UploadModal issues={this.props.issues} locations={this.props.locations} level={this.props.level} {...this.props} />
-                    //<Upload {...props} />
-                    //<Card body>
-                    //<Button color="danger" onClick={this.uploadPhoto}>Upload new photo</Button>
-                    //</Card>
+                    <UploadModal
+                        issues={this.props.issues}
+                        locations={this.props.locations}
+                        reload={this.props.reload}
+                        level={this.props.level}
+                        {...this.props} />
                 )
                 break;
             case "close":
                 return (
-                    //<Card body>
-                    <Button color="danger" onClick={this.closeThemAll}>Close them all!</Button>
-                    //</Card>
+                    <Button color="danger" onClick={this.closeThemAll}>Close issue</Button>
                 )
                 break;
             case "complain":
@@ -148,24 +112,18 @@ class GeneralListMap extends Component {
                         complains={this.state.complains}
                         newLevel={this.props.setLevel}
                         {...this.props} />
-
-                    /*<Card body>
-                        <Button color="danger" onClick={this.showComplains}>Show complains</Button>
-                    </Card>*/
                 )
                 break;
             default: { return null }
         }
     }
 
-
+    //
     componentDidMount() {
-        //console.log("didMount - props", this.props)
-        //console.log("didMount - path:", this.props.match.path)
         this.getComplains()
     }
 
-
+    //
     render() {
         return (
             <>
@@ -181,8 +139,6 @@ class GeneralListMap extends Component {
                             ) : (<></>)
                         }
                         <article>
-
-                            {/*<h1>{this.props.Elements} List</h1>*/}
                             <GeneralCardList
                                 issues={this.state.issues}
                                 Elements={"issues"}
@@ -190,25 +146,12 @@ class GeneralListMap extends Component {
                                 onCheck={this.onCheck}
                                 getData={this.getData}
                             />
-                            {/*
-                                this.props.issues.map(element =>
-                                    <GeneralCard
-                                        key={element.id}
-                                        Elements={"issues"}
-                                        element={element}
-                                        {...this.props}
-                                        onCheck={this.onCheck}
-                                        getData={this.getData}
-                                    />
-                                )
-                                */}
                         </article>
                     </aside>
                     <main>
-                        {/* <Leaflet locations={this.props.locations} /> */}
-                        {/*<img className="test-map" src={require("../../images/test-map.png")} alt="test map" />*/}
+                        <Leaflet
+                            locations={this.props.locations} />
                     </main>
-
                 </div>
             </>
         )

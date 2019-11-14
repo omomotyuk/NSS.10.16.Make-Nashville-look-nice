@@ -1,4 +1,6 @@
-
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
 .map-flex-container {
     display: flex;
@@ -15,35 +17,34 @@
 
 main {
     /* flex: 3; */
-    flex: 4;
+    flex: 6;
     margin: 1em;
 }
 
 aside {
     flex: 1;
     margin: 1em;
-    height: 800px;
+    height: 1100px;
     overflow: scroll;
 }
 
 #map {
-    height: 800px;
+    height: 1100px;
     background:lightgrey;
   }
 
 img.test-map {
 /*    width: 1000px;*/
-    height: 800px;
+    height: 1100px;
 }
 
 img.test-photo {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    max-width: 75%;
+    max-width: 100%;
     height: auto;
     border-radius: 8px;
-
     /* height: 80px; */
 }
 
@@ -53,4 +54,8 @@ span.generalCardPhotoUser {
 
 span.generalCardIssueStatus {
     color: red;
+}
+
+span.generalCardPhotoUser, .generalCardIssueDate, .generalCardIssueStatus{
+    font-size: .7em;
 }

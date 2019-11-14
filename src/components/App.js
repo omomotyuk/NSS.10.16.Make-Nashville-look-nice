@@ -1,19 +1,20 @@
 import React, { Component } from "react";
-//import logo from "../images/logo.svg";
 import NavBar from "./navbar/NavBar";
 import AppViews from "./AppViews";
-import "./App.css";
 import APIManager from "../modules/APIManager"
-import LocationData from "./LocationData"
-//import IssueData from "./IssueData"
 import ActiveData from "./ActiveData"
+import LocationData from "./LocationData"
+import "./App.css";
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
+//
 class App extends Component {
 
   state = {
     user: localStorage.getItem("credentials") !== null,
     level: localStorage.getItem('userLevel'),
-
     query: {
       table: "users",
       email: "",
@@ -21,32 +22,25 @@ class App extends Component {
       password: "",
       firstName: ""
     },
-
     users: [],
     issues: [],
     photos: [],
     locations: []
   };
 
-
+  //
   checkLoginData = () => {
-
     APIManager.getRecord(this.state.query)
       .then(userList => {
-        //console.log("checkLoginData userList:", userList)
         if (userList.length) {
+
           localStorage.setItem("credentials", JSON.stringify(userList));
-          //
           let returnedStorage = localStorage.getItem('credentials')
           let currentUser = JSON.parse(returnedStorage)[0]
-
           localStorage.setItem("userLevel", currentUser.level)
 
-          //console.log("checkLoginData credentials currentUser:", currentUser)
-          //console.log("checkLoginData credentials currentUser.level:", currentUser.level)
           this.setState({
             user: this.isAuthenticated(),
-            //level: currentUser.level
             level: localStorage.getItem('userLevel')
           });
         } else {
@@ -55,13 +49,11 @@ class App extends Component {
       })
   }
 
-
   // Check if credentials are in local storage and returns true/false
   isAuthenticated = () => localStorage.getItem("credentials") !== null;
 
-
+  //
   setUser = authObj => {
-    //console.log("App.setUser - userInfo from SignIn:", authObj)
     this.setState(updater => ({
       query: {
         table: updater.query.table,
@@ -74,6 +66,7 @@ class App extends Component {
     )
   }
 
+  //
   containsCharacterFrom = (set, phrase) => {
     if (
       phrase
@@ -85,7 +78,7 @@ class App extends Component {
     return 0;
   };
 
-
+  //
   verifyPassPhrase = passphrase => {
     const passLength = 8;
 
@@ -114,7 +107,7 @@ class App extends Component {
     return 1;
   };
 
-
+  //
   verifyInput = input => {
     if (input.password !== input.password_confirm) {
       alert("Password and its confirmation are different.");
@@ -129,11 +122,11 @@ class App extends Component {
     return 1;
   };
 
+  //
   newRecord = query => {
     const record = {
       firstName: "",
       lastName: "",
-      //name: query.name,
       userName: query.userName,
       email: query.email,
       password: query.password,
@@ -143,12 +136,11 @@ class App extends Component {
     return record;
   };
 
-
+  //
   checkSignupData = (input) => {
 
     let query = {
       table: "users",
-      //name: input.name,
       firstName: input.firstName,
       lastName: input.lastName,
       userName: input.userName,
@@ -177,21 +169,22 @@ class App extends Component {
       })
   }
 
-
+  //
   newUser = input => {
     this.checkSignupData(input)
   }
 
-  // componentDidMount() {
-  // 	this.setState({
-  // 		user: this.isAuthenticated()
-  // 	});
-  // }
+  /*
+    componentDidMount() {
+   	this.setState({
+   		user: this.isAuthenticated()
+   	});
+   }
+  */
 
-
+  //
   clearUser = () => {
     localStorage.clear()
-
     this.setState({
       user: this.isAuthenticated(),
       level: localStorage.getItem('userLevel')
@@ -200,6 +193,7 @@ class App extends Component {
     document.location.reload()
   }
 
+  //
   setUsers = (data) => {
     this.setState(() => ({
       users: data
@@ -214,19 +208,18 @@ class App extends Component {
     )
   }
 
+  //
   setPhotos = (data) => {
     this.setState(() => ({
       photos: data
     }))
   }
 
+  //
   setLevel = (id, level) => {
-    console.log("setLevel - id,level", id, level)
-
     APIManager.get("users", id)
       .then(user => {
         user.level = level
-        //this.updateLocation(issue.id)
         return (user)
       })
       .then(user => {
@@ -234,14 +227,12 @@ class App extends Component {
           .then(() => {
             //this.props.reload()
             APIManager.allRecords("users").then((users) => {
-              //console.log("GeneralList.getData - issues:", issues)
               this.setState(() => {
                 return {
                   users: users
                 }
               })
             })
-            //
           })
       })
   }
@@ -254,6 +245,7 @@ class App extends Component {
     )
   }
 
+  //
   reloadAll = () => {
     //this.forceUpdate()
     document.location.reload()
@@ -263,12 +255,15 @@ class App extends Component {
   render() {
     return (
       <React.Fragment >
-        <ActiveData setUsers={this.setUsers} setIssues={this.setIssues} setPhotos={this.setPhotos} />
-        {/*
-          <IssueData Elements={"issues"} setIssues={this.setIssues} />
-*/}
-        < LocationData Elements={"issues"} getLocation={this.getLocation} />
-        <NavBar user={this.state.user} level={this.state.level} clearUser={this.clearUser} />
+        <ActiveData setUsers={this.setUsers}
+          setIssues={this.setIssues}
+          setPhotos={this.setPhotos} />
+        {/*<IssueData Elements={"issues"} setIssues={this.setIssues} />*/}
+        <LocationData Elements={"issues"}
+          getLocation={this.getLocation} />
+        <NavBar user={this.state.user}
+          level={this.state.level}
+          clearUser={this.clearUser} />
         <AppViews user={this.state.user}
           level={this.state.level}
           users={this.state.users}

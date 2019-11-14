@@ -20,7 +20,6 @@ const API = {
     return fetch(`${remoteURL}/${database}?_expand=${expanded}`).then(e => e.json())
   },
   getAndFilter: (database, key, value) => {
-    //console.log("getAndFilter:", database, key, value)
     return fetch(`${remoteURL}/${database}?${key}=${value}`).then(e => e.json())
   },
   getFeed: (database, currentUser, friendsIdsString) => {
@@ -55,7 +54,6 @@ const API = {
     if (table) {
       query = `${table}`
     }
-    //console.log("API.putRecord.query: ", query)
 
     return fetch(`${remoteURL}/${query}`, {
       method: "POST",
@@ -72,7 +70,6 @@ const API = {
     if (table) {
       query = `${table}`
     }
-    //console.log("API.putRecord.query: ", query)
 
     return fetch(`${remoteURL}/${query}`, {
       method: "PUT",
@@ -84,7 +81,6 @@ const API = {
       .then(response => response.json())
   },
   updateRecord: (table, id, data) => {
-    //console.log("updateRecord - id:", id)
     return fetch(`${remoteURL}/${table}/${id}`, {
       method: "PUT",
       headers: {
