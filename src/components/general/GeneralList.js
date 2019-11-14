@@ -2,17 +2,20 @@ import React, { Component } from 'react';
 import GeneralCard from './GeneralCard';
 import APIManager from '../../modules/APIManager';
 import "./General.css"
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
-
+//
 class GeneralList extends Component {
     state = {
         issues: [],
         checked: []
     }
 
+    //
     getData = (Elements) => {
         APIManager.getAndFilter(Elements, "status", "active").then((issues) => {
-            //console.log("GeneralList.getData - issues:", issues)
             this.setState(() => {
                 return {
                     issues: issues
@@ -20,26 +23,24 @@ class GeneralList extends Component {
             })
         })
     }
-    //
 
     //
     onCheck = (id) => {
         console.log("onCheck - id:", id)
     }
+
     //
     componentDidMount() {
-        //console.log("General list: ComponentDidMount", this.props.Elements);
         this.getData(this.props.Elements)
     }
 
+    //
     render() {
-        //console.log("pls render Elements")
         return (
             <>
                 <div className="map-flex-container">
                     <aside>
                         <article>
-                            {/*<h1>{this.props.Elements} List</h1>*/}
                             {
                                 this.state.issues.map(element =>
                                     <GeneralCard
@@ -57,7 +58,6 @@ class GeneralList extends Component {
                     <main>
                         <img className="test-map" src={require("../../images/test-map.png")} alt="test map" />
                     </main>
-
                 </div>
             </>
         )

@@ -1,14 +1,18 @@
 
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
+
 .modal-photo-card {
-    width: 500px;    /* 50vw Occupy the 50% of the screen width */
-    max-width: 500px;
+    width: 1000px;    /* 50vw Occupy the 50% of the screen width */
+    max-width: 1000px;
 }
 
 .modal-photo {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    width: 80%;
+    width: 100%;
     /*width: 100px;*/
 }
 
@@ -26,4 +30,8 @@
 
 .modal-photo-comment {
     width: 90%;
+}
+
+.modal-xl {
+    width: 100%;
 }

@@ -1,13 +1,13 @@
 import React, { Component } from "react"
-//import { Link } from "react-router-dom"
 import { Button, Form, FormGroup, Input, Card, CardBody, Row, Col } from 'reactstrap'
-//import { Label } from 'reactstrap'
-//import ImageUploader from 'react-images-upload';
 import APIManager from "../../modules/APIManager"
 import ExifData from "./ExifData"
 import GPStoDegree from "./GPStoDegree"
+/*
+// 2019, Alex Momotyuk, Make Nashville Look Nice, NSS, Front-end capstone project
+*/
 
-
+//
 class Upload extends Component {
 
     // Set initial state
@@ -29,25 +29,16 @@ class Upload extends Component {
     //
     handleUpload = (e) => {
         e.preventDefault()
-        //
         this.props.history.push("/");
     }
 
     //
     fileChangedHandler = event => {
-        console.log("upload file:", event.target.files[0])
-        //output.src = URL.createObjectURL(event.target.files[0]);
-        //let tmppath = window.URL.createObjectURL(event.target.files[0])
-        //console.log("upload file obj path:", tmppath)
-        //console.log("upload file tmp path:", $("img").fadeIn("fast").attr('src', tmppath))
-        console.log("upload file name:", event.target.files[0].name)
-
         this.setState({
             selectedFile: event.target.files[0],
             filePath: URL.createObjectURL(event.target.files[0]),
             fileName: event.target.files[0].name,
             photoData: ExifData.getExifData(event.target.files[0])
-            //photoData: event.target.files[0].exifdata
         })
     }
 
@@ -57,6 +48,7 @@ class Upload extends Component {
         return new Date(t[0], t[1], t[2], t[3], t[4], t[5])
     }
 
+    //
     uploadPhotoFile = (location) => {
 
         let photo = {
@@ -82,44 +74,26 @@ class Upload extends Component {
                 if (photoList.length) {
                     alert("Photos " + photo.fileName + " is already in database!");
                 } else {
-                    // putting new record to database
-                    //if (this.verifyInput(query)) {
-                    //const record = this.newRecord(query);
                     APIManager.putRecord("photos", photo).then(data => {
-                        console.log("new photo record data:", data)
                         issue.reportPhoto = data.id
                         alert("New photo " + photo.fileName + " added. Thanks for report!");
                         return data
                     })
                         .then((photo) => {
                             APIManager.putRecord("issues", issue).then(data => {
-                                console.log("new issue record data:", data)
                                 this.setLocation(issue, photo)
-
                                 alert("New issue created. Thanks for report!");
-
-                                //this.props.reload()
                             })
                         })
-                    //} else {
-                    //alert("Input data for registration is not valid. Try again!");
-                    //}
                 }
             })
     }
 
-
-
     //
     uploadHandler = (e) => {
         e.preventDefault()
-
         var Convertor = new GPStoDegree(this.state.photoData)
-
         let location = Convertor.getData()
-
-        console.log("uploadHandler - location:", location, location.latitude, location.longitude.length)
-
         if (location.latitude.length !== 0 && location.longitude.length !== 0) {
             this.uploadPhotoFile(location)
         } else {
@@ -127,11 +101,16 @@ class Upload extends Component {
         }
     }
 
-
+    //
     setLocation = (issue, photo) => {
         let returnedStorage = localStorage.getItem('locations')
         let LSLocations = JSON.parse(returnedStorage)
-        LSLocations = LSLocations.concat(this.newLocation(issue.id, photo.latitude, photo.longitude, photo.userId, photo.takenDate.substring(0, 10)))
+        LSLocations = LSLocations.concat(this.newLocation(
+            issue.id,
+            photo.latitude,
+            photo.longitude,
+            photo.userId,
+            photo.takenDate.substring(0, 10)))
         localStorage.setItem("locations", JSON.stringify(LSLocations));
     }
 
@@ -147,7 +126,7 @@ class Upload extends Component {
         return location
     }
 
-
+    //
     render() {
         return (
             <div className="spooky-background">
@@ -160,11 +139,6 @@ class Upload extends Component {
                                         <h3>Upload issue photo</h3>
                                     </FormGroup>
                                     <FormGroup>
-                                        {/*<Label htmlFor="email">new photo</Label>
-                                        <Input onChange={this.handleFieldChange} type="email"
-                                            id="email"
-                                            placeholder="Email Address"
-                                            required="" autoFocus="" />*/}
                                         <Input data-name="upload-element"
                                             accept=".jpg,.jpeg,.tiff"
                                             title="Click here to upload document"
@@ -193,5 +167,3 @@ class Upload extends Component {
 }
 
 export default Upload
-
-// onload={() => window.URL.revokeObjectURL(this.state.filePath)}
