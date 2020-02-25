@@ -67,7 +67,10 @@ export default class Leaflet extends Component {
 
     //this.props.locations.map(location => {
     locations.map(location => {
-      return (L.marker([location.latitude, location.longitude]).bindPopup("User ID:" + location.username + " " + location.date).addTo(this.map))
+      return (L.marker([location.latitude, location.longitude])
+        .bindPopup(`<img src=${require("../../photos/" + location.fileName)} alt="mark photo" height="100px"/><br /><span>"User ID: ${location.username} <br /> Date: ${location.date}</span>`)
+        .addTo(this.map))
+      //.bindPopup("User ID:" + location.username + " " + location.date).addTo(this.map))
     })
 
     // log user clicks
