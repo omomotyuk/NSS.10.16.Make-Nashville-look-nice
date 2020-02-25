@@ -32,7 +32,8 @@ class LocationData extends Component {
                                         photo.latitude,
                                         photo.longitude,
                                         photo.userId,
-                                        photo.takenDate.substring(0, 10))
+                                        photo.takenDate.substring(0, 10),
+                                        photo.fileName)
                                     )
                                 }
                             })
@@ -44,13 +45,14 @@ class LocationData extends Component {
     }
 
     //
-    newLocation = (issue, latitude, longitude, user, date) => {
+    newLocation = (issue, latitude, longitude, user, date, fileName) => {
         const location = {
             issue: issue,
             latitude: latitude,
             longitude: longitude,
             username: user,
-            date: date
+            date: date,
+            fileName: fileName
         }
         return location
     }

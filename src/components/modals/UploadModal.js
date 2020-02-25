@@ -26,10 +26,51 @@ const UploadModal = (props) => {
   const toggle = () => setModal(!modal);
 
   //
+  //
+  //const saveFile = () => {
+
+  // Example: Client-browser code to download file from SharePoint using JavaScript and REST
+  //}
+  //
+  //
+
+
+  //
   const fileChangedHandler = event => {
     filePath = URL.createObjectURL(event.target.files[0])
     fileName = event.target.files[0].name
+
+    console.log("fileName: ", fileName)
+
     photoData = ExifData.getExifData(event.target.files[0])
+    //
+    //
+    var _fileName = fileName + ".new"
+
+    var url = filePath
+    var link = document.createElement("a");
+    console.log("link: ", link)
+    link.setAttribute("href", url);
+    link.setAttribute("download", _fileName);
+    link.style = "visibility:hidden";
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    //setTimeout(function () { document.body.removeChild(link); }, 500);
+
+
+    /*sprLib.file( newFileName ).get()
+      .then(function (blob) {
+        var url = (window.URL || window.webkitURL).createObjectURL(blob);
+        var link = document.createElement("a");
+        link.setAttribute("href", url);
+        link.setAttribute("download", _fileName);
+        link.style = "visibility:hidden";
+        document.body.appendChild(link);
+        link.click();
+        setTimeout(function () { document.body.removeChild(link); }, 500);
+      });*/
+
   }
 
   //
